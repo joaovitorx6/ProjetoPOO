@@ -10,7 +10,7 @@ public class Usuario {
 	private String login, senha, nome, cpf, telefone;
 	boolean eAdmin;
 	
-	public Usuario(String login, String senha, String nome, String cpf, boolean eAdmin) throws CPFInvalidoException, LoginExcedidoException, SenhaExcedidaException {
+	public Usuario(String login, String senha, String nome, String cpf, String telefone, boolean eAdmin) throws CPFInvalidoException, LoginExcedidoException, SenhaExcedidaException {
 		if(cpf.length()!=11)
 			throw new CPFInvalidoException("CPF deve conter 11 digitos");
 		for (int i=0; i<cpf.length();i++) {
@@ -28,6 +28,7 @@ public class Usuario {
 		this.senha = senha;
 		this.nome = nome;
 		this.cpf = cpf;
+		this.telefone=telefone;
 		this.eAdmin = eAdmin;
 		
 	}
@@ -36,7 +37,7 @@ public class Usuario {
 		if (this.login.equals(login) && this.senha.equals(senha)) {
 			return true;
 		}else {
-			throw new LoginInvalidoException("Login não autorizado");
+			throw new LoginInvalidoException("Login nao autorizado");
 		}
 	}
 	
