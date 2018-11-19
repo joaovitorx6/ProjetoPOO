@@ -9,16 +9,25 @@ public class AbrigoAnimais {
     public static void main (String[] args) throws LoginExcedidoException, CPFInvalidoException, SenhaExcedidaException {
         
         /*VARIAVEIS*/
-        int opcao4, resulmenu1, resulmenu2,resulmenu3,indiceUsuarios=1;
-        String nome, cpf, telefone, login, senha;
-        boolean run=true,runtwo=true,result=false, eAdmin=false;
+        int opcao4, resulmenu1, resulmenu2,resulmenu3,resulmenuAnimais,indiceUsuarios=1,
+        		id, indiceAnimais=0,
+        		indiceAdotantes=0;
+        String nome, cpf, telefone, login, senha,
+        		idade, descricao, data_chegada, data_saida; //ANIMAIS
+        boolean run=true,runtwo=true,runthree=true, result=false, eAdmin=false,
+        		castrado, vermifugado, disponivelParaAdocao, adotado, //ANIMAIS
+        		encontrou; //para buscas
+        
         Scanner input = new java.util.Scanner(System.in);
         
         /*ARRAYS*/
         Usuario [] arrUsuarios = new Usuario [100];
+        Animal [] arrAnimais = new Animal[100];
+        Adotante [] arrAdotantes = new Adotante[100];
         
         /*OBJETOS*/
         Usuario usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true) ;
+        Animal animal;
         arrUsuarios[indiceUsuarios]=usuarioAdmin;
         indiceUsuarios++;
         
@@ -41,7 +50,7 @@ public class AbrigoAnimais {
        }
        
       
-		if (usuarioAdmin.geteAdmin()) {
+		if (usuarioAdmin.geteAdmin()) { //SE O USUARIO FOR ADMINISTRADOR
 		    //MENU DO USUARIO ADMIN
 		    while (run) {
 		    	
@@ -116,19 +125,19 @@ public class AbrigoAnimais {
 		                                System.out.println("[1] - NOME");
 		                                System.out.println("[2] - CPF");
 		                                System.out.println("[3] - TELEFONE");
-		                                System.out.println("[4] - VOLTAR PRO MENU DO USUARIO");
+		                                System.out.println("[4] - VOLTAR PARA O MENU DO USUARIO");
 		                                resulmenu3 = input.nextInt(); 
 		                                
 		                                switch(resulmenu3){
-			                                case 1:
-			                               
+			                                case 1: //ATUALIZAR NOME
 			                                    System.out.println("DIGITE O SEU NOVO NOME:");
 			                                    nome = input.next();
 			                                    usuarioAdmin.setNome(nome);
 			                                    
 			                                    System.out.println("NOME ATUALIZADO COM SUCESSO");
 			                                    break;
-			                                case 2:
+			                                    
+			                                case 2: //ATUALIZAR CPF
 			                                    System.out.println("DIGITE O SEU NOVO CPF:");
 			                                    cpf = input.next();
 			                                    
@@ -140,23 +149,21 @@ public class AbrigoAnimais {
 			                                    }
 			                                    
 			                                    break;
-			                                case 3:
+			                                    
+			                                case 3: //ATUALIZAR TELEFONE
 			                                    System.out.println("DIGITE O SEU NOVO TELEFONE:");
 			                                    telefone = input.next();
-			                                    
-			                                    try {
-			                                    	usuarioAdmin.setTelefone(telefone);
-			                                    } catch (TelefoneInvalidoException error) {
-			                                    }
+			                                    usuarioAdmin.setTelefone(telefone);
+			                                   
 			                                    break;
 			                                case 4:
 			                                		break;
 			                                default:
 			                                    break;
-		                                } //FIM MENU ATUALIZAR INFORMAÃƒâ€¡Ãƒâ€¢ES DO USUÃƒï¿½RIO 
-		                             break;
+		                                } //FIM MENU ATUALIZAR INFORMACOES DO USUARIO 
+		                                break;
 		                                
-			                       case 3:
+			                       case 3: //ATUALIZAR LOGIN /SENHA
 			                        	System.out.println("O QUE DESEJA ATUALIZAR:");
 			                        	System.out.println("[1] - LOGIN / [2] - SENHA");
 			                        	opcao4 = input.nextInt();
@@ -183,7 +190,8 @@ public class AbrigoAnimais {
 			                        	}
 			                        	break;
 			                        	
-			                     case 4:
+			                     case 4: //DESATIVAR CONTA
+			                    	 
 			                    	 	for(int i=0;i<arrUsuarios.length;i++) {
 			                    	 		if (arrUsuarios[i]!=null) {
 			                    	 			if (arrUsuarios[i].getCPF().equals(usuarioAdmin.getCPF())) {
@@ -194,7 +202,8 @@ public class AbrigoAnimais {
 			                    	 		}
 			                    	 	}
 			                        	break;
-			                      case 5:
+			                        	
+			                      case 5: //LISTAR TODOS OS USUARIOS
 			                    	  	for (int i=0; i<arrUsuarios.length;i++) {
 			                    	  		if(arrUsuarios[i]!=null) {
 				                    	  		System.out.println("Nome: " + arrUsuarios[i].getNome());
@@ -210,10 +219,105 @@ public class AbrigoAnimais {
 			                      default:
 			                    	  break;
 			                    	  
-			                    }//FIM DO SWITCH DO USUÃ�RIO
+			                    }//FIM DO SWITCH DO USUARIO
 		                	} //FIM DO WHILE 2
-		                case 2:
-		                	break;
+		                
+		                case 2: //*** AREA DO ANIMAL ****
+		                	System.out.println("**** AREA DO ANIMAL ****");
+		                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
+		                    System.out.println("[2] - ATUALIZAR CADASTRO");
+		                    System.out.println("[3] - LISTAR ANIMAIS DISPONIVEIS PARA ADOCAO");
+		                    System.out.println("[4] - REALIZAR ADOÇÃO");
+		                    System.out.println("[5] - LISTAR TODOS OS ANIMAIS");
+		                    System.out.println("[6] - VOLTAR PRO MENU PRINCIPAL");
+		                    
+		                    resulmenuAnimais = input.nextInt();
+		                    
+		                    switch(resulmenuAnimais) {
+		                    	case 1: //REALIZAR NOVO CADASTRO
+		                    		System.out.println("**** CADASTRANDO NOVO ANIMAL ****");
+		                    		System.out.println("DIGITE O NOME: ");
+		                    		nome = input.next();
+		                    		System.out.println("DIGITE A IDADE: ");
+		                    		idade = input.next();
+		                    		System.out.println("ESCREVA UMA DESCRICAO: ");
+		                    		descricao = input.next();
+		                    		System.out.println("INFORME A DATA DE ENTRADA: ");
+		                    		data_chegada = input.next();
+		                    		
+		                    		animal = new Animal(indiceAnimais, nome, idade, descricao, data_chegada);
+		                    		
+		                    		arrAnimais[indiceAnimais] = animal;
+		                    		indiceAnimais++;
+		                    		
+		                    		System.out.println("Animal cadastrado com sucesso!");
+		                    		
+		                    		break;
+		                    		
+		                    	case 2: //ATUALIZAR CADASTRO
+		                    		
+		                    		break;
+		                    		
+		                    	case 3: //LISTAR ANIMAIS DISP. PARA ADOCAO
+		                    		for (int i=0; i<indiceAnimais;i++) {
+		                    			if(arrAnimais[i]!=null && arrAnimais[i].getDisponivelAdocao()) {
+		                    				System.out.println("------ "+arrAnimais[i].getNome()+" -----");
+		                    				System.out.println("ID: "+arrAnimais[i].getidAnimal());
+		                    				System.out.println("Idade: "+arrAnimais[i].getIdade());
+		                    				System.out.println("Descricao: "+arrAnimais[i].getDescricao());
+		                    				System.out.println("Castrado: "+arrAnimais[i].getCastrado());
+		                    				System.out.println("Vermifugado: "+arrAnimais[i].getVermifugado());
+		                    				System.out.println("---------------------------------------------");
+		                    			}
+		                    		}
+		                    		
+		                    		break;
+		                    		
+		                    	case 4: //REALIZAR ADOCAO
+		                    		System.out.println("DIGITE O ID DO ANIMAL:");
+		                    		id = input.nextInt();
+		                    		
+		                    		//BUSCANDO O ANIMAL INFORMANDO
+		                    		for (int i=0; i<indiceAnimais;i++) {
+		                    			if(arrAnimais[i]!=null && arrAnimais[i].getidAnimal()==id) {
+		                    				System.out.println("------ "+arrAnimais[i].getNome()+" -----");
+		                    				System.out.println("Idade: "+arrAnimais[i].getIdade());
+		                    				System.out.println("Descricao: "+arrAnimais[i].getDescricao());
+		                    				System.out.println("Castrado: "+arrAnimais[i].getCastrado());
+		                    				System.out.println("Vermifugado: "+arrAnimais[i].getVermifugado());
+		                    				System.out.println("---------------------------------------------");
+		                    				animal = arrAnimais[i];
+		                    				//QUANDO EU FAÇO ISSO EU TÔ MEXENDO NO INDICE QUE EU QUERO MESMO?
+		                    				break;
+		                    			}
+		                    		}
+		                    		System.out.println("INFORME O CPF DO ADOTANTE");
+		                    		cpf = input.next();
+		                    		
+		                    		//FACO A BUSCA AQUI MESMO? ADOTANTENAOENCONTRADO É UMA EXCEPTION?
+		                    		//BUSCANDO ADOTANTE CADASTRADO
+		                    		for (int i=0; i<indiceAdotantes;i++) {
+		                    			if(arrAdotantes[i]!=null && arrAdotantes[i].getCpf().equals(cpf)) {
+		                    				System.out.println("----- "+arrAdotantes[i].getNome()+" -----");
+		                    				System.out.println("CPF: "+arrAdotantes[i].getCpf());
+		                    				System.out.println("Email: "+arrAdotantes[i].getEmail());
+		                    				System.out.println("Telefone: "+arrAdotantes[i].getTelefoneCelular());
+		                    				System.out.println("Cidade: "+arrAdotantes[i].getCidade());
+		                    				break;
+		                    			}
+		                    		}
+		                    		
+		                    		
+		                    		
+		                    		break;
+		                    		
+		                    	case 5: //BUSCAR ANIMAL: GATOS/CACHORROS/NAO VERMIFUGADO/NAO CASTRADOS/
+		                    		break;
+		                    		
+		                    	case 6: //VOLTAR PARA O MENU PRINCIPAL
+		                    } //FIM DO SWITCH
+		                    
+		                	break; //FIM DA AREA DO ANIMAL
 		                case 3:
 		                	break;
 		                case 4:
@@ -229,7 +333,12 @@ public class AbrigoAnimais {
 	            } //FIM DO SWITCH PRINCIPAL (MENU PRINCIPAL)  
                 
 		    	} //FIM DO WHILE      	
-             }  else if (usuarioAdmin.geteAdmin()==false) { 
+		    
+		    
+		    
+		    // ****** SE O USUARIO NAO FOR ADMINISTRADOR ****
+		    
+             }  else if (usuarioAdmin.geteAdmin()==false) {
             	 
             	 while (run) {
      		    	
@@ -332,10 +441,8 @@ public class AbrigoAnimais {
      			                                    System.out.println("DIGITE O SEU NOVO TELEFONE:");
      			                                    telefone = input.next();
      			                                    
-     			                                    try {
-     			                                    	usuarioAdmin.setTelefone(telefone);
-     			                                    } catch (TelefoneInvalidoException error) {
-     			                                    }
+     			                                    usuarioAdmin.setTelefone(telefone);
+     			                                   
      			                                    break;
      			                                case 4:
      			                                		break;
@@ -420,3 +527,4 @@ public class AbrigoAnimais {
              } //FIM DO IF 
     } //FIM DO MAIN
 }//FIM DA CLASSE
+

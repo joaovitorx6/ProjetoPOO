@@ -1,5 +1,7 @@
 
 package model;
+import exception.AnimalNaoEncontradoException;
+import exception.CPFInvalidoException;
 
 public class Adotante {
     
@@ -28,8 +30,15 @@ public class Adotante {
         this.zona=null;
     }
     
-    public Adotante (String nome, String dataNascimento, String cpf, String sexo, String email, String telefoneCelular, String telefoneFixo, String rua, String cidade, String bairro, String CEP, String UF, String nacionalidade, String zona) {
- 
+    public Adotante (String nome, String dataNascimento, String cpf, String sexo, String email, String telefoneCelular, String telefoneFixo, String rua, String cidade, String bairro, String CEP, String UF, String nacionalidade, String zona) throws CPFInvalidoException {
+    	if(cpf.length()!=11)
+			throw new CPFInvalidoException("CPF deve conter 11 digitos");
+		for (int i=0; i<cpf.length();i++) {
+			char c = cpf.charAt(i);
+			if (!Character.isDigit(c)) {
+				throw new CPFInvalidoException("CPF deve contar apenas digitos");
+			}	
+		}
         this.nome=nome;
         this.dataNascimento=dataNascimento;
         this.cpf=cpf;
@@ -166,20 +175,23 @@ public class Adotante {
     public Animal buscarAnimal (int idAnimal) throws AnimalNaoEncontradoException {
         
         for (int i=0; i<arrAnimal.length; i++){
-            if (arrAnimal[i].getidAnimal==idAnimal){
+            if (arrAnimal[i].getidAnimal()==idAnimal){
                 return arrAnimal[i];
             } 
         }
         
-        throw new AnimalNaoEncontradoException ("Animal não encontrado");
+        throw new AnimalNaoEncontradoException ("Animal nao encontrado");
     }
 
     //remover animal, seria colocar nulo no arr, ou tirar a ligação dele com o adotante??
-    //feedback de animal removido seria uma exceção? 
+    //nesse caso acredito que seja retirar a ligacao dele com o adotante. 
+    
+    //feedback de animal removido seria uma exceção?
+    //R: n�o porque n�o � um "erro" como um cpf digitado incorreto p. exemplo. Acredito eu.
     
     public void removerAnimal (int idAnimal){
-        for (int i=0; i<arrAnimal.lenght; i++){
-            if (arrAnimal[i].getidAnimal==idAnimal){
+        for (int i=0; i<arrAnimal.length; i++){
+            if (arrAnimal[i].getidAnimal()==idAnimal){
                 arrAnimal[i]=null;
             } 
         }
@@ -188,6 +200,5 @@ public class Adotante {
     public Animal [] listarAnimais (){
         return arrAnimal;
     }
-    
-
+ 
 }

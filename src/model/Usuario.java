@@ -75,22 +75,14 @@ public class Usuario {
 		for (int i=0; i<cpf.length();i++) {
 			char c = cpf.charAt(i);
 			if (!Character.isDigit(c)) {
-				throw new CPFInvalidoException("CPF deve contar apenas digitos");
+				throw new CPFInvalidoException("CPF deve conter apenas digitos");
 			}	
 		}
 		this.cpf = cpf;
 	}
 	
-	public void setTelefone(String telefone) throws TelefoneInvalidoException {
-		for(int i=0;i<telefone.length();i++) {
-			char c = telefone.charAt(i);
-			if(!Character.isDigit(c)) {
-				throw new TelefoneInvalidoException("Telefone deve contar apenas digitos");
-			}
-		}
-		
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-		
 	}
 	
 	public void atualizarSenha (String senha) throws SenhaExcedidaException{

@@ -1,5 +1,6 @@
 
 package model;
+import exception.DoacaoNaoEncontradaException;
 
 public class Doador {
     
@@ -167,12 +168,12 @@ public class Doador {
     public Doacao buscarDoacao (int idDoacao) throws DoacaoNaoEncontradaException {
         
         for (int i=0; i<arrDoacoes.length; i++){
-            if (arrDoacoes[i].getIdDoacao==idDoacao){
+            if (arrDoacoes[i].getIdDoacao()==idDoacao){
                 return arrDoacoes[i];
             } 
         }
         
-        throw new DoacaoNaoEncontradaException ("Doação não encontrada");
+        throw new DoacaoNaoEncontradaException ("Doa�ao n�o encontrada!");
     }
     
     //nao pode remover uma doação?! (kkkkkk)
