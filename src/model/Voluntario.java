@@ -1,5 +1,6 @@
 package model;
 import exception.CPFInvalidoException;
+import exception.IdadeMaximaAtingidaException;
 import exception.TelefoneInvalidoException;
 
 public class Voluntario {
@@ -7,8 +8,13 @@ public class Voluntario {
 	private int idade;
 	private boolean ativo;
 	
-	public Voluntario (String nome, String cpf, int idade, String telefone, String diasSemana, String horario) throws CPFInvalidoException, TelefoneInvalidoException {
+	public Voluntario (String nome, String cpf, int idade, String telefone, String diasSemana, String horario) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException {
 		
+		if(idade>18) {
+			throw new IdadeMaximaAtingidaException("Idade máxima para ser voluntário é a partir dos 18 anos");
+		}
+		
+		if (diasSemana)
 		if(cpf.length()!=11)
 			throw new CPFInvalidoException("CPF deve conter 11 digitos");
 		for (int i=0; i<cpf.length();i++) {
