@@ -1,20 +1,29 @@
 package model;
 import exception.CPFInvalidoException;
+import exception.HorarioExcedidoException;
 import exception.IdadeMaximaAtingidaException;
 import exception.TelefoneInvalidoException;
 
 public class Voluntario {
-	private String nome, cpf, telefone, diasSemana, horario;
-	private int idade;
+	
+	private String nome, cpf, telefone;
+	private int idade, diasVoluntario[], horarioInicial, horarioFinal;
 	private boolean ativo;
 	
-	public Voluntario (String nome, String cpf, int idade, String telefone, String diasSemana, String horario) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException {
+	public Voluntario (String nome, String cpf, int idade, String telefone, int diasVoluntario [], int horarioInicial, int horarioFinal) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException, HorarioExcedidoException {
 		
-		if(idade>18) {
-			throw new IdadeMaximaAtingidaException("Idade máxima para ser voluntário é a partir dos 18 anos");
+		if (horarioInicial<8 || horarioInicial>20) {
+			throw new HorarioExcedidoException("Horario nÃ£o permitido");
 		}
 		
-		if (diasSemana)
+		if (horarioFinal<8 || horarioFinal>20) {
+			throw new HorarioExcedidoException("Horario nÃ£o permitido");
+		}
+		
+		if(idade>18) {
+			throw new IdadeMaximaAtingidaException("Idade mï¿½xima para ser voluntï¿½rio ï¿½ a partir dos 18 anos");
+		}
+		
 		if(cpf.length()!=11)
 			throw new CPFInvalidoException("CPF deve conter 11 digitos");
 		for (int i=0; i<cpf.length();i++) {
@@ -35,9 +44,13 @@ public class Voluntario {
 		this.cpf = cpf;
 		this.idade = idade;
 		this.telefone = telefone;
-		this.diasSemana = diasSemana;
-		this.horario = horario;
+		this.horarioInicial = horarioInicial;
+		this.horarioFinal = horarioFinal;
 		this.ativo = true;
+		this.diasVoluntario = new int [6];
+		for (int i = 0; i < diasVoluntario.length; i++) {
+			diasVoluntario[i] = 0;
+		}
 		
 	}
 	
@@ -70,16 +83,36 @@ public class Voluntario {
 		
 	}
 	
-	public void setDiasSemana(String diasSemana) {
-		this.diasSemana = diasSemana;
+	public String getCpf () {
+		return cpf;
 	}
 	
-	public void setHorario (String horario) {
-		this.horario = horario;
+	public void setDias (int [] diasVoluntario) {
+		this.diasVoluntario=diasVoluntario;
 	}
 	
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setHorarioFinal (int horarioFinal) throws HorarioExcedidoException{
+		if (horarioFinal<8 || horarioFinal>20) {
+			throw new HorarioExcedidoException("Horario nÃ£o permitido");
+		} else {
+			this.horarioFinal = horarioFinal;
+		}
+	}
+	
+	public void setHorarioInicial (int horarioInicial) throws HorarioExcedidoException{
+		if (horarioInicial<8 || horarioInicial>20) {
+			throw new HorarioExcedidoException("Horario nÃ£o permitido");
+		} else {
+			this.horarioInicial = horarioInicial;
+		}
+	}
+	
+	public void setIdade(int idade) throws IdadeMaximaAtingidaException {
+		if (idade<18) {
+			this.idade = idade;
+		} else {
+			throw new IdadeMaximaAtingidaException ("Idade nÃ£o permitida!");
+		}
 	}
 	
 	public void desativarVoluntario() {
