@@ -187,7 +187,7 @@ public class Adotante {
     //nesse caso acredito que seja retirar a ligacao dele com o adotante. 
     
     //feedback de animal removido seria uma exceÃ§Ã£o?
-    //R: não porque não é um "erro" como um cpf digitado incorreto p. exemplo. Acredito eu.
+    //R: nï¿½o porque nï¿½o ï¿½ um "erro" como um cpf digitado incorreto p. exemplo. Acredito eu.
     
     public void removerAnimal (int idAnimal){
         for (int i=0; i<arrAnimal.length; i++){
@@ -199,6 +199,11 @@ public class Adotante {
     
     public Animal [] listarAnimais (){
         return arrAnimal;
+    }
+    
+    public void realizarAdocao (Animal animal){
+    	arrAnimal[contadorAnimal] = animal;
+    	contadorAnimal++;
     }
  
 }

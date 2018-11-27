@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 import model.*;
 import exception.*; 
+import controller.AbrigoAnimaisController;
 
 public class AbrigoAnimais {
 
@@ -10,33 +11,48 @@ public class AbrigoAnimais {
         
         /*VARIAVEIS*/
         int idade, opcao4, resulmenu1, resulmenu2,resulmenu3,resulmenuAnimais, resulmenuVoluntarios, indiceUsuarios=1,
-        		id, indiceAnimais=0,
+        		id, indiceAnimais=0, tipo,
         		indiceAdotantes=0,
         		menuAtualizarInfoVoluntarios, diasVoluntario [] = new int [6], horarioInicial, horarioFinal; //VOLUNTÁRIO 
         String nome, cpf, telefone, login, senha,
         		descricao, data_chegada, data_saida; //ANIMAIS
         	
         boolean run=true,runtwo=true,runthree=true, result=false, eAdmin=false,
-        		castrado, vermifugado, disponivelParaAdocao, adotado, //ANIMAIS
-        		encontrou; //para buscas
+        		castrado, vermifugado, disponivelParaAdocao, adotado; //ANIMAIS
+ 
         Scanner input = new java.util.Scanner(System.in);
+        
+        /*VARIAVEIS AUXILIARES*/
+        int resposta;
+        Animal [] arrAnimais; // REFERENCIA PARA RECEBER 
         
         /*ARRAYS*/
         Usuario [] arrUsuarios = new Usuario [100];
-        Animal [] arrAnimais = new Animal[100];
-        Adotante [] arrAdotantes = new Adotante[100];
+        /*Adotante [] arrAdotantes = new Adotante[100];*/
         Voluntario [] arrVoluntarios = new Voluntario[100];
         
         /*OBJETOS*/
-        Usuario usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true) ;
         Animal animal;
+        Adotante adotante=null;
         Voluntario voluntario=null;
-        arrUsuarios[indiceUsuarios]=usuarioAdmin;
-        indiceUsuarios++;
-        
+        AbrigoAnimaisController controller = new AbrigoAnimaisController();
+        Usuario usuarioAdmin=null;
         Usuario usuario=null;
         
-       while (!result) {	
+        //PRECISEI COLOCAR O TRY CATCH PORQUE ERA ESSE O ERRO QUE TAVA DANDO
+        try {
+        	usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true);
+        	arrUsuarios[indiceUsuarios]=usuarioAdmin;
+            indiceUsuarios++;
+        } catch (CPFInvalidoException e) {
+        	System.out.println(e.getMessage());
+        } catch (SenhaExcedidaException e) {
+        	System.out.println(e.getMessage());
+        } catch (LoginExcedidoException e) {
+        	System.out.println(e.getMessage());
+        }
+        
+	while (!result) {	
 		   try {
 		        	
 		      /*VERIFICA O LOGIN E PEGA O OBJETO DO USUARIO*/
@@ -230,40 +246,60 @@ public class AbrigoAnimais {
 		                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
 		                    System.out.println("[2] - ATUALIZAR CADASTRO");
 		                    System.out.println("[3] - LISTAR ANIMAIS DISPONIVEIS PARA ADOCAO");
-		                    System.out.println("[4] - REALIZAR ADOÃ‡ÃƒO");
-		                    System.out.println("[5] - LISTAR TODOS OS ANIMAIS");
-		                    System.out.println("[6] - VOLTAR PRO MENU PRINCIPAL");
+		                    System.out.println("[4] - REALIZAR ADOCAO");
+		                    System.out.println("[5] - BUSCAR ANIMAIS");
+		                    System.out.println("[6] - VOLTAR PARA O MENU PRINCIPAL");
 		                    
 		                    resulmenuAnimais = input.nextInt();
 		                    
 		                    switch(resulmenuAnimais) {
-		                    	case 1: //REALIZAR NOVO CADASTRO
-		                    		System.out.println("**** CADASTRANDO NOVO ANIMAL ****");
-		                    		System.out.println("DIGITE O NOME: ");
-		                    		nome = input.next();
-		                    		System.out.println("DIGITE A IDADE: ");
-		                    		idade = input.nextInt();
-		                    		System.out.println("ESCREVA UMA DESCRICAO: ");
-		                    		descricao = input.next();
-		                    		System.out.println("INFORME A DATA DE ENTRADA: ");
-		                    		data_chegada = input.next();
-		                    		
-		                    		animal = new Animal(indiceAnimais, nome, idade, descricao, data_chegada);
-		                    		
-		                    		arrAnimais[indiceAnimais] = animal;
-		                    		indiceAnimais++;
-		                    		
-		                    		System.out.println("Animal cadastrado com sucesso!");
-		                    		
-		                    		break;
+		                    case 1: //REALIZAR NOVO CADASTRO
+	                    		System.out.println("**** CADASTRANDO NOVO ANIMAL ****");
+	                    		System.out.println("QUAL A ESPECIE?");
+	                    		System.out.println("[1] CACHORRO");
+	                    		System.out.println("[2] GATO");
+	                    		tipo = input.nextInt();
+	                    		System.out.println("DIGITE O NOME: ");
+	                    		nome = input.next();
+	                    		System.out.println("DIGITE A IDADE: ");
+	                    		idade = input.nextInt();
+	                    		System.out.println("ESCREVA UMA DESCRICAO: ");
+	                    		descricao = input.next();
+	                    		System.out.println("INFORME A DATA DE ENTRADA: ");
+	                    		data_chegada = input.next();
+	                    		
+	                    		animal = new Animal(indiceAnimais, tipo, nome, idade, descricao, data_chegada);
+	                    		
+	                    		//CHAMANDO A FUNCAO QUE ADICIONA NO ARRAY
+	                    		controller.cadastrarAnimal(animal);
+	                    		
+	                    		System.out.println("Animal cadastrado com sucesso!");
+	                    		
+	                    		break;
 		                    		
 		                    	case 2: //ATUALIZAR CADASTRO
 		                    		
 		                    		break;
 		                    		
-		                    	case 3: //LISTAR ANIMAIS DISP. PARA ADOCAO
-		                    		for (int i=0; i<indiceAnimais;i++) {
-		                    			if(arrAnimais[i]!=null && arrAnimais[i].getDisponivelAdocao()) {
+		                    	case 3: //LISTAR ANIMAIS DISP. PARA ADOCAO POR FILTRO
+		                    		System.out.println("----- ANIMAIS DISPONIVEIS PARA ADOCAO -----");
+		                    		System.out.println("FILTRAR POR: ");
+		                    		System.out.println("[1] CACHORRO");
+		                    		System.out.println("[2] GATO");
+		                    		System.out.println("[3] TODOS");
+		                    		tipo = input.nextInt();
+		                    		
+		                    		//EXCECAO PARA QUANDO A BUSCA NAO RETORNAR NADA
+		                    		try {
+		                    			arrAnimais = controller.listarAnimaisDiponiveis(tipo);
+		                    		}catch(AnimalNaoEncontradoException error) {
+		                    			System.out.println(error.getMessage());
+		                    		}
+		                    		
+		                    		//LACO PARA IMPRIMIR NA TELA
+		                    		arrAnimais=null;
+		                    		for(int i=0; i<arrAnimais.length; i++) {
+		                    			if(arrAnimais!=null) {
 		                    				System.out.println("------ "+arrAnimais[i].getNome()+" -----");
 		                    				System.out.println("ID: "+arrAnimais[i].getidAnimal());
 		                    				System.out.println("Idade: "+arrAnimais[i].getIdade());
@@ -274,45 +310,57 @@ public class AbrigoAnimais {
 		                    			}
 		                    		}
 		                    		
+		                    		System.out.println("DESEJA REALIZAR UMA ADOCAO? ");
+		                    		System.out.println("[1] SIM / [2] NAO");
+		                    		resposta = input.nextInt();
+		                    		if (resposta==1) {
+		                    			resulmenuAnimais=4;
+		                    			continue;
+		                    		}
+		                    		
 		                    		break;
 		                    		
 		                    	case 4: //REALIZAR ADOCAO
 		                    		System.out.println("DIGITE O ID DO ANIMAL:");
 		                    		id = input.nextInt();
 		                    		
-		                    		animal = null;
-		                    	
-		                    		//BUSCANDO O ANIMAL INFORMANDO
-		                    		for (int i=0; i<indiceAnimais;i++) {
-		                    			if(arrAnimais[i]!=null && arrAnimais[i].getidAnimal()==id) {
-		                    				System.out.println("------ "+arrAnimais[i].getNome()+" -----");
-		                    				System.out.println("Idade: "+arrAnimais[i].getIdade());
-		                    				System.out.println("Descricao: "+arrAnimais[i].getDescricao());
-		                    				System.out.println("Castrado: "+arrAnimais[i].getCastrado());
-		                    				System.out.println("Vermifugado: "+arrAnimais[i].getVermifugado());
-		                    				System.out.println("---------------------------------------------");
-		                    				animal = arrAnimais[i];
-		                    				//QUANDO EU FAÃ‡O ISSO EU TÃ” MEXENDO NO INDICE QUE EU QUERO MESMO?
-		                    				break;
-		                    			}
-		                    		}
-		                    		System.out.println("INFORME O CPF DO ADOTANTE");
-		                    		cpf = input.next();
-		                    		
-		                    		//FACO A BUSCA AQUI MESMO? ADOTANTENAOENCONTRADO Ã‰ UMA EXCEPTION?
-		                    		//BUSCANDO ADOTANTE CADASTRADO
-		                    		for (int i=0; i<indiceAdotantes;i++) {
-		                    			if(arrAdotantes[i]!=null && arrAdotantes[i].getCpf().equals(cpf)) {
-		                    				System.out.println("----- "+arrAdotantes[i].getNome()+" -----");
-		                    				System.out.println("CPF: "+arrAdotantes[i].getCpf());
-		                    				System.out.println("Email: "+arrAdotantes[i].getEmail());
-		                    				System.out.println("Telefone: "+arrAdotantes[i].getTelefoneCelular());
-		                    				System.out.println("Cidade: "+arrAdotantes[i].getCidade());
-		                    				break;
-		                    			}
+		                    		animal = null; //GARANTE QUE O OBJETO EH INICIALIZADO
+		                    		try {
+		                    			animal = controller.buscarAnimalporID(id);
+		                    		}catch (AnimalNaoEncontradoException error) {
+		                    			System.out.println(error.getMessage());
 		                    		}
 		                    		
+                    				System.out.println("------ "+animal.getNome()+" -----");
+                    				System.out.println("Idade: "+animal.getIdade());
+                    				System.out.println("Descricao: "+animal.getDescricao());
+                    				System.out.println("Castrado: "+animal.getCastrado());
+                    				System.out.println("Vermifugado: "+animal.getVermifugado());
+                    				System.out.println("---------------------------------------------");
+                    				
+		                    		System.out.println("CONFIRMA ANIMAL? [1]SIM [2]NAO");
+		                    		resposta = input.nextInt();
 		                    		
+		                    		if(resposta==2) {
+		                    			continue;
+		                    		}else {
+		                    			System.out.println("INFORME O CPF DO ADOTANTE");
+			                    		cpf = input.next();
+		                    		}
+		                    			
+		                    		try {
+		                    			adotante = controller.buscarAdotante(cpf);
+		                    		}catch(CPFInvalidoException error) {
+		                    			System.out.println(error.getMessage());
+		                    		}catch (AdotanteNaoEncontradoException error) {
+		                    			System.out.println(error.getMessage());
+		                    		}
+		                    		
+		                    		//COLOCANDO O ANIMAL NO ARRAY DE ANIMAIS EM ADOTANTE
+		                    		adotante.realizarAdocao(animal);
+		                    		
+		                    		//MARCA O ANIMAL COMO ADOTADO
+		                    		animal.realizarAdocao("DATA ATUAL");
 		                    		
 		                    		break;
 		                    		

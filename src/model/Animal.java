@@ -8,7 +8,7 @@ public class Animal {
 	
 	Informacao [] informacoes = new Informacao[10]; //DE REMEDIOS, CONSULTAS, ETC
 	
-	public Animal (int id, String nome, int idade, String descricao, String data_chegada) {
+	public Animal (int id, int tipo, String nome, int idade, String descricao, String data_chegada) {
 		this.id = id;
 		this.nome = nome;
 		this.idade = idade;
