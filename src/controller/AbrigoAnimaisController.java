@@ -2,6 +2,7 @@ package controller;
 
 import model.Adotante;
 import model.Animal;
+import model.Doador;
 import exception.AnimalNaoEncontradoException;
 import exception.CPFInvalidoException;
 import exception.AdotanteNaoEncontradoException;
@@ -10,10 +11,11 @@ public class AbrigoAnimaisController {
 	
 	Animal [] arrAnimais = new Animal[100];
     Adotante [] arrAdotantes = new Adotante[100];
+    Doador [] arrDoadores = new Doador[100];
     Animal [] arrAnimaisAux;
     Adotante adotante;
     
-    int indiceAnimais=0;
+    int indiceAnimais=0, iDoador=0;
     
     //BUSCAR ANIMAL CADASTRADO POR ID
     public Animal buscarAnimalporID(int id) throws AnimalNaoEncontradoException {
@@ -76,4 +78,36 @@ public class AbrigoAnimaisController {
 		throw new AdotanteNaoEncontradoException("Adotante nao cadastrado");
 		
     }
+    
+    public void cadastrarDoador (Doador doador) {
+    	arrDoadores[iDoador]=doador;
+    	iDoador++;
+    }
+    
+    public Doador buscarDoador (String cpf) {
+    	for (int i=0; i<arrDoadores.length;i++) {
+    		if (arrDoadores[i]!=null) {
+	    		if (arrDoadores[i].getCpf().equals(cpf)) 
+	    			return arrDoadores[i];	
+    		}
+    	}
+    	return null;
+    }
+    
+    public int desvincularDoador (String cpf) {
+    	for (int i=0; i<arrDoadores.length;i++) {
+    		if(arrDoadores[i]!=null) {
+    			if (arrDoadores[i].getCpf().equals(cpf)) 
+    				arrDoadores[i]=null;
+    			return 1;
+    		}
+    	}
+    	return 0;
+    }
+    
+    public Doador [] buscarArrDoadores () {
+    	return arrDoadores;
+    }
+    
+    
 }

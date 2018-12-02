@@ -1,11 +1,14 @@
 
 package model;
+import exception.TelefoneInvalidoException;
+import exception.CPFInvalidoException;
 import exception.DoacaoNaoEncontradaException;
+import exception.IdadeMaximaAtingidaException;
 
 public class Doador {
     
-    public String nome, dataNascimento, cpf, sexo, email, telefoneCelular, telefoneFixo;
-    public String rua, cidade, bairro, CEP, UF, nacionalidade, zona;
+    public String nome, cpf, telefone, endereco;
+    public int [] dataNascimento;
     
     int contadorDoacoes;
     public Doacao [] arrDoacoes = new Doacao [100];
@@ -14,148 +17,81 @@ public class Doador {
         this.nome=null;
         this.dataNascimento=null;
         this.cpf=null;
-        this.sexo=null;
-        this.email=null;
-        this.telefoneCelular=null;
-        this.telefoneFixo=null;
-        this.rua=null;
-        this.cidade=null;
-        this.bairro=null;
-        this.CEP=null;
-        this.UF=null;
-        this.nacionalidade=null;
-        this.zona=null;
+        this.telefone=null;
+        this.endereco=null;
     }
     
-    public Doador (String nome, String dataNascimento, String cpf, String sexo, String email, String telefoneCelular, String telefoneFixo, String rua, String cidade, String bairro, String CEP, String UF, String nacionalidade, String zona) {
+    public Doador (String nome, int dataNascimento [], String cpf, String telefone, String endereco) throws IdadeMaximaAtingidaException, CPFInvalidoException, TelefoneInvalidoException {
+    	
+    	if (dataNascimento[2]>1999)
+    		throw new IdadeMaximaAtingidaException("Idade não permitida, só cadastramos maiores de 18 anos.");
+    	if(cpf.length()!=11)
+			throw new CPFInvalidoException("CPF deve conter 11 digitos");
+		for (int i=0; i<cpf.length();i++) {
+			char c = cpf.charAt(i);
+			if (!Character.isDigit(c)) {
+				throw new CPFInvalidoException("CPF deve contar apenas digitos");
+			}	
+		}
+		
+		if(telefone.length()!=11)
+			throw new TelefoneInvalidoException("Telefone deve conter 11 digitos.");
+		
         this.nome=nome;
-        this.dataNascimento=dataNascimento;
+        this.dataNascimento = new int [3];
         this.cpf=cpf;
-        this.sexo=sexo;
-        this.email=email;
-        this.telefoneCelular=telefoneCelular;
-        this.telefoneFixo=telefoneFixo;
-        this.rua=rua;
-        this.cidade=cidade;
-        this.bairro=bairro;
-        this.CEP=CEP;
-        this.UF=UF;
-        this.nacionalidade=nacionalidade;
-        this.zona=zona;
+        this.telefone=telefone;
+        this.endereco=endereco;
     }
     
-      public String getNome() {
+     public String getNome() {
         return nome;
-    }
-
-    public String getDataNascimento() {
-        return dataNascimento;
     }
 
     public String getCpf() {
         return cpf;
     }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public String getCEP() {
-        return CEP;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public String getNacionalidade() {
-        return nacionalidade;
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public String getTelefoneCelular() {
-        return telefoneCelular;
-    }
-
-    public String getTelefoneFixo() {
-        return telefoneFixo;
-    }
-
-    public String getUF() {
-        return UF;
-    }
-
-    public String getZona() {
-        return zona;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
     
-    public void setUF (String UF){
-        this.UF=UF;
-    }
-
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public void setCpf(String cpf) {
+    public String getTelefone() {
+		return telefone;
+	}
+    
+    public String getEndereco() {
+		return endereco;
+	}
+    
+    public int [] getDataNascimento() {
+		return dataNascimento;
+	}
+    
+    public void setCpf(String cpf) throws CPFInvalidoException {
+    	
+    	if(cpf.length()!=11)
+			throw new CPFInvalidoException("CPF deve conter 11 digitos");
+		for (int i=0; i<cpf.length();i++) {
+			char c = cpf.charAt(i);
+			if (!Character.isDigit(c)) {
+				throw new CPFInvalidoException("CPF deve contar apenas digitos");
+			}	
+		}
+		
         this.cpf = cpf;
     }
 
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
+    public void setTelefone(String telefone) throws TelefoneInvalidoException {
+    	if(telefone.length()!=11)
+			throw new TelefoneInvalidoException("Telefone deve conter 11 digitos.");
+    	this.telefone = telefone;
+	}
+    
+    public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public void setTelefoneCelular(String telefoneCelular) {
-        this.telefoneCelular = telefoneCelular;
-    }
-
-    public void setTelefoneFixo(String telefoneFixo) {
-        this.telefoneFixo = telefoneFixo;
-    }
-
-    public void setZona(String zona) {
-        this.zona = zona;
-    }
-    
     public void addDoacao (Doacao doacao){
         arrDoacoes[contadorDoacoes]=doacao;
         contadorDoacoes++;
@@ -173,9 +109,7 @@ public class Doador {
             } 
         }
         
-        throw new DoacaoNaoEncontradaException ("Doa�ao n�o encontrada!");
+        throw new DoacaoNaoEncontradaException ("Doa�ao n�o encontrada!");
     }
-    
-    //nao pode remover uma doação?! (kkkkkk)
     
 }
