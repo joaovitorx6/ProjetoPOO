@@ -7,10 +7,10 @@ import exception.TelefoneInvalidoException;
 public class Voluntario {
 	
 	private String nome, cpf, telefone;
-	private int idade, diasVoluntario[], horarioInicial, horarioFinal;
+	private int dataNascimento [], diasVoluntario[], horarioInicial, horarioFinal;
 	private boolean ativo;
 	
-	public Voluntario (String nome, String cpf, int idade, String telefone, int diasVoluntario [], int horarioInicial, int horarioFinal) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException, HorarioExcedidoException {
+	public Voluntario (String nome, String cpf, int dataNascimento[], String telefone, int diasVoluntario [], int horarioInicial, int horarioFinal) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException, HorarioExcedidoException {
 		
 		if (horarioInicial<8 || horarioInicial>20) {
 			throw new HorarioExcedidoException("Horario não permitido");
@@ -20,7 +20,7 @@ public class Voluntario {
 			throw new HorarioExcedidoException("Horario não permitido");
 		}
 		
-		if(idade>18) {
+		if(dataNascimento[2]>1999) {
 			throw new IdadeMaximaAtingidaException("Idade m�xima para ser volunt�rio � a partir dos 18 anos");
 		}
 		
@@ -33,6 +33,9 @@ public class Voluntario {
 			}	
 		}
 		
+		if(telefone.length()!=11)
+			throw new TelefoneInvalidoException("Telefone deve conter 11 digitos.");
+		
 		for(int i=0;i<telefone.length();i++) {
 			char c = telefone.charAt(i);
 			if(!Character.isDigit(c)) {
@@ -42,15 +45,12 @@ public class Voluntario {
 		
 		this.nome = nome;
 		this.cpf = cpf;
-		this.idade = idade;
+		this.dataNascimento = dataNascimento;
 		this.telefone = telefone;
 		this.horarioInicial = horarioInicial;
 		this.horarioFinal = horarioFinal;
 		this.ativo = true;
-		this.diasVoluntario = new int [6];
-		for (int i = 0; i < diasVoluntario.length; i++) {
-			diasVoluntario[i] = 0;
-		}
+		this.diasVoluntario = diasVoluntario;
 		
 	}
 	
@@ -72,6 +72,10 @@ public class Voluntario {
 	}
 	
 	public void setTelefone(String telefone) throws TelefoneInvalidoException {
+		
+		if(telefone.length()!=11)
+			throw new TelefoneInvalidoException("Telefone deve conter 11 digitos.");
+		
 		for(int i=0;i<telefone.length();i++) {
 			char c = telefone.charAt(i);
 			if(!Character.isDigit(c)) {
@@ -83,8 +87,32 @@ public class Voluntario {
 		
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	
 	public String getCpf () {
 		return cpf;
+	}
+	
+	public int [] getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public String getTelefone() {
+		return telefone;
+	}
+	
+	public int [] getDiasVoluntario() {
+		return diasVoluntario;
+	}
+	
+	public int getHorarioFinal() {
+		return horarioFinal;
+	}
+	
+	public int getHorarioInicial() {
+		return horarioInicial;
 	}
 	
 	public void setDias (int [] diasVoluntario) {
@@ -104,14 +132,6 @@ public class Voluntario {
 			throw new HorarioExcedidoException("Horario não permitido");
 		} else {
 			this.horarioInicial = horarioInicial;
-		}
-	}
-	
-	public void setIdade(int idade) throws IdadeMaximaAtingidaException {
-		if (idade<18) {
-			this.idade = idade;
-		} else {
-			throw new IdadeMaximaAtingidaException ("Idade não permitida!");
 		}
 	}
 	

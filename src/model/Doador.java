@@ -1,6 +1,8 @@
 
 package model;
 import exception.TelefoneInvalidoException;
+import controller.AbrigoAnimaisController;
+import exception.CPFExistenteException;
 import exception.CPFInvalidoException;
 import exception.DoacaoNaoEncontradaException;
 import exception.IdadeMaximaAtingidaException;
@@ -33,12 +35,12 @@ public class Doador {
 				throw new CPFInvalidoException("CPF deve contar apenas digitos");
 			}	
 		}
-		
+		 
 		if(telefone.length()!=11)
 			throw new TelefoneInvalidoException("Telefone deve conter 11 digitos.");
 		
         this.nome=nome;
-        this.dataNascimento = new int [3];
+        this.dataNascimento = dataNascimento;
         this.cpf=cpf;
         this.telefone=telefone;
         this.endereco=endereco;
@@ -90,26 +92,6 @@ public class Doador {
     
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public void addDoacao (Doacao doacao){
-        arrDoacoes[contadorDoacoes]=doacao;
-        contadorDoacoes++;
-    }
-    
-    public Doacao [] listarDoacoes (){
-        return arrDoacoes;
-    }
-    
-    public Doacao buscarDoacao (int idDoacao) throws DoacaoNaoEncontradaException {
-        
-        for (int i=0; i<arrDoacoes.length; i++){
-            if (arrDoacoes[i].getIdDoacao()==idDoacao){
-                return arrDoacoes[i];
-            } 
-        }
-        
-        throw new DoacaoNaoEncontradaException ("Doa�ao n�o encontrada!");
     }
     
 }

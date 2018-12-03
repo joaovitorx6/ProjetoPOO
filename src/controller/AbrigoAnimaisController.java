@@ -3,19 +3,24 @@ package controller;
 import model.Adotante;
 import model.Animal;
 import model.Doador;
+import model.Voluntario;
 import exception.AnimalNaoEncontradoException;
 import exception.CPFInvalidoException;
+import exception.DoadorNaoEncontradoException;
+import exception.VoluntarioNaoEncontradoException;
 import exception.AdotanteNaoEncontradoException;
+import exception.CPFExistenteException;
 
 public class AbrigoAnimaisController {
 	
 	Animal [] arrAnimais = new Animal[100];
     Adotante [] arrAdotantes = new Adotante[100];
     Doador [] arrDoadores = new Doador[100];
+    Voluntario [] arrVoluntarios = new Voluntario[100];
     Animal [] arrAnimaisAux;
     Adotante adotante;
     
-    int indiceAnimais=0, iDoador=0;
+    int indiceAnimais=0, iDoador=0, iVoluntario=0;
     
     //BUSCAR ANIMAL CADASTRADO POR ID
     public Animal buscarAnimalporID(int id) throws AnimalNaoEncontradoException {
@@ -84,14 +89,47 @@ public class AbrigoAnimaisController {
     	iDoador++;
     }
     
-    public Doador buscarDoador (String cpf) {
+    public void cadastrarVoluntario (Voluntario voluntario) {
+    	arrVoluntarios[iVoluntario]=voluntario;
+    	iVoluntario++;
+    }
+    
+    public Doador buscarDoador (String cpf) throws DoadorNaoEncontradoException {
     	for (int i=0; i<arrDoadores.length;i++) {
     		if (arrDoadores[i]!=null) {
 	    		if (arrDoadores[i].getCpf().equals(cpf)) 
 	    			return arrDoadores[i];	
     		}
     	}
-    	return null;
+    	throw new DoadorNaoEncontradoException("Doador não encontrado!!");
+    }
+    
+    public Voluntario buscarVoluntario (String cpf) throws VoluntarioNaoEncontradoException {
+    	for (int i=0; i<arrVoluntarios.length;i++) {
+    		if (arrVoluntarios[i]!=null) {
+	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
+	    			return arrVoluntarios[i];	
+    		}
+    	}
+    	throw new VoluntarioNaoEncontradoException("Voluntario não encontrado!!");
+    }
+    
+    public void verificarCPFDoador (String cpf) throws CPFExistenteException {
+    	for (int i=0; i<arrDoadores.length;i++) {
+    		if (arrDoadores[i]!=null) {
+	    		if (arrDoadores[i].getCpf().equals(cpf)) 
+	    			throw new CPFExistenteException("CPF já existente no sistema!!");	
+    		}
+    	}
+    }
+    
+    public void verificarCPFVoluntario (String cpf) throws CPFExistenteException {
+    	for (int i=0; i<arrVoluntarios.length;i++) {
+    		if (arrVoluntarios[i]!=null) {
+	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
+	    			throw new CPFExistenteException("CPF já existente no sistema!!");	
+    		}
+    	}
     }
     
     public int desvincularDoador (String cpf) {
@@ -105,7 +143,7 @@ public class AbrigoAnimaisController {
     	return 0;
     }
     
-    public Doador [] buscarArrDoadores () {
+    public Doador [] buscarArrDoadores() {
     	return arrDoadores;
     }
     

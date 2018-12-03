@@ -28,7 +28,7 @@ public class AbrigoAnimais {
         /*VARIAVEIS AUXILIARES*/
         int resposta;
         Animal [] arrAnimais; // REFERENCIA PARA RECEBER 
-        
+        Doador [] arrDoadores; // REFERENCIA PARA RECEBER
         /*ARRAYS*/
         Usuario [] arrUsuarios = new Usuario [100];
         /*Adotante [] arrAdotantes = new Adotante[100];*/
@@ -378,12 +378,14 @@ public class AbrigoAnimais {
 		                		run4=true;
 		                		while (run4) {
 			                	    System.out.println("**** MENU DO VOLUNTÁRIO ****");
-				                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
+				                    System.out.println("[1] - CADASTRO");
 				                    System.out.println("[2] - ATUALIZAR INFORMACOES PESSOAIS");
 				                    System.out.println("[3] - ATUALIZAR DIAS DE VISITA");
 				                    System.out.println("[4] - ATUALIZAR HORÁRIO DE VISITA");
-				                    System.out.println("[5] - DESATIVAR CADASTRO");
-				                    System.out.println("[6] - SAIR");
+				                    System.out.println("[5] - BUSCAR VOLUNTÁRIO");
+				                    System.out.println("[6] - LISTAR VOLUNTÁRIOS");
+				                    System.out.println("[7] - DESATIVAR CADASTRO");
+				                    System.out.println("[8] - SAIR");
 				                    resulmenuVoluntarios = input.nextInt();
 				                    
 				                    switch (resulmenuVoluntarios) {
@@ -393,8 +395,12 @@ public class AbrigoAnimais {
 				                    		nome = input.next();
 				                    		System.out.println("Digite o seu cpf:");
 				                    		cpf = input.next();
-				                    		System.out.println("Digite a sua idade:");
-				                    		idade = input.nextInt();
+				                    		System.out.println("DIA DE NASCIMENTO:");
+				                			dataNascimento[0]=input.nextInt();
+				                			System.out.println("MES DE NASCIMENTO:");
+				                			dataNascimento[1]=input.nextInt();
+				                			System.out.println("ANO DE NASCIMENTO:");
+				                			dataNascimento[2]=input.nextInt();
 				                    		System.out.println("Digite o seu telefone:");
 				                    		telefone = input.next();
 				                    		System.out.println("Digite os dias da semana que você quer se voluntariar:");
@@ -426,8 +432,10 @@ public class AbrigoAnimais {
 				                    		
 				                    		
 				                    		try{
-				                    			voluntario = new Voluntario(nome, cpf, idade, telefone, diasVoluntario, horarioInicial, horarioFinal);
+				                    			controller.verificarCPFVoluntario(cpf);
+				                    			voluntario = new Voluntario(nome, cpf, dataNascimento, telefone, diasVoluntario, horarioInicial, horarioFinal);
 				                    			System.out.println("USUÁRIO CADASTRADO COM SUCESSO!");
+				                    			controller.cadastrarVoluntario(voluntario);
 				                    		} catch (CPFInvalidoException error) {
 				                    			System.out.println(error.getMessage());
 				                    		} catch (TelefoneInvalidoException error) {
@@ -435,6 +443,8 @@ public class AbrigoAnimais {
 				                    		} catch (IdadeMaximaAtingidaException error) {
 				                    			System.out.println(error.getMessage());
 				                    		} catch (HorarioExcedidoException error) {
+				                    			System.out.println(error.getMessage());
+				                    		} catch (CPFExistenteException error) {
 				                    			System.out.println(error.getMessage());
 				                    		}
 				                    		
@@ -457,8 +467,7 @@ public class AbrigoAnimais {
 				                    		System.out.println("O que deseja atualizar?");
 				                    		System.out.println("[1] - Nome");
 				                    		System.out.println("[2] - CPF");
-				                    		System.out.println("[3] - Idade");
-				                    		System.out.println("[4] - Telefone");
+				                    		System.out.println("[3] - Telefone");
 				                    		
 				                    		menuAtualizarInfoVoluntarios = input.nextInt();
 				                    		
@@ -482,17 +491,6 @@ public class AbrigoAnimais {
 				                    				
 				                    				break;
 				                    			case 3:
-				                    				System.out.println("Digite a sua nova idade:");
-				                    				idade = input.nextInt();
-				                    				
-				                    				try {
-				                    					voluntario.setIdade(idade);
-				                    				} catch (IdadeMaximaAtingidaException error) {
-				                    					System.out.println(error.getMessage());
-				                    				}
-				                    				
-				                    				break;
-				                    			case 4:
 				                    				System.out.println("Digite o seu novo telefone:");
 				                    				telefone = input.next();
 				                    				
@@ -549,9 +547,43 @@ public class AbrigoAnimais {
 				                    		
 				                    		break;
 				                    	case 5:
+				                    		System.out.println("DIGITE O CPF DO VOLUNTÁRIO:");
+				                			cpf=input.next();
+				                			
+				                			try {
+				                				voluntario = controller.buscarVoluntario(cpf);
+					                			System.out.println("NOME:" + voluntario.getNome());
+					                			dataNascimento=voluntario.getDataNascimento();
+					                			System.out.println("DATA DE NASCIMENTO:" + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
+					                			System.out.println("CPF:" + voluntario.getCpf());
+					                			System.out.println("TELEFONE:" + voluntario.getTelefone());
+					                			diasVoluntario = voluntario.getDiasVoluntario();
+					                			System.out.println("DIAS:");
+					                			if (diasVoluntario[0]==1) 
+					                				System.out.println("SEGUNDA");
+					                			if (diasVoluntario[1]==1) 
+					                				System.out.println("TERÇA");
+					                			if (diasVoluntario[2]==1) 
+					                				System.out.println("QUARTA");
+					                			if (diasVoluntario[3]==1) 
+					                				System.out.println("QUINTA");
+					                			if (diasVoluntario[4]==1) 
+					                				System.out.println("SEXTA");
+					                			if (diasVoluntario[5]==1) 
+					                				System.out.println("SABÁDO");
+					                			
+					                			System.out.println("HORÁRIO: " + voluntario.getHorarioInicial() + "às" + voluntario.getHorarioFinal());
+					                		
+					                			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+				                			} catch (VoluntarioNaoEncontradoException error) {
+				                				System.out.println(error.getMessage());
+				                			}
+				                			
+				                			break;
+				                    	case 7:
 				                    		//deixar array null;
 				                    		break;
-				                    	case 6:
+				                    	case 8:
 				                    		run4=false;
 				                    		break;
 				                    	default:
@@ -574,6 +606,7 @@ public class AbrigoAnimais {
 			                	System.out.println("[6] - SAIR");
 			                	menuDoador=input.nextInt();
 			                	
+			                	
 			                	switch (menuDoador) {
 			                		case 1:
 			                			System.out.println("NOME:");
@@ -590,11 +623,15 @@ public class AbrigoAnimais {
 			                			telefone = input.next();
 			                			System.out.println("ENDEREÇO:");
 			                			endereco=input.next();
+			                			input = new Scanner(System.in);
 			                			
 			                			try {
+			                				controller.verificarCPFDoador(cpf);
 			                				doador = new Doador (nome, dataNascimento, cpf, telefone, endereco);
 			                				controller.cadastrarDoador(doador);
 			                				System.out.println("DOADOR CADASTRADO!!");
+			                			} catch (CPFExistenteException error) {
+			                				System.out.println(error.getMessage());
 			                			} catch(IdadeMaximaAtingidaException error) {
 			                				System.out.println(error.getMessage());
 			                			} catch (CPFInvalidoException error) {
@@ -603,12 +640,20 @@ public class AbrigoAnimais {
 			                				System.out.println(error.getMessage());
 			                			}
 			                			
+			                			System.out.println("\n");
+			                			
 			                			break;
 			                		case 2:
 			                			
 			                			System.out.println("DIGITE O CPF DO DOADOR A SER ATUALIZADO:");
 			                			cpf=input.next();
-			                			doador = controller.buscarDoador(cpf);
+			                			
+			                			try { 
+		                					doador.setCpf(cpf);
+		                					System.out.println("CPF ATUALIZADO!!");
+		                				}catch(CPFInvalidoException error) {
+		                					System.out.println(error.getMessage());
+		                				}
 			                			
 			                			System.out.println("[1] - NOME");
 			                			System.out.println("[2] - CPF");
@@ -622,18 +667,13 @@ public class AbrigoAnimais {
 				                				nome=input.next();
 				                				doador.setNome(nome);
 				                				System.out.println("NOME ATUALIZADO!!");
+				                				input = new Scanner(System.in);
 				                				break;
 				                			case 2:
 				                				System.out.println("DIGITE O NOVO CPF:");
 				                				cpf=input.next();
 				                				
-				                				try { 
-				                					doador.setCpf(cpf);
-				                					System.out.println("CPF ATUALIZADO!!");
-				                				}catch(CPFInvalidoException error) {
-				                					System.out.println(error.getMessage());
-				                				}
-				                				
+				                				input = new Scanner(System.in);
 				                				break;
 				                			case 3:
 				                				System.out.println("DIGITE O NOVO TELEFONE:");
@@ -644,12 +684,15 @@ public class AbrigoAnimais {
 				                				}catch(TelefoneInvalidoException error) {
 				                					System.out.println(error.getMessage());
 				                				}
+				                				input = new Scanner(System.in);
 				                				break;
 				                			case 4:
 				                				System.out.println("DIGITE O NOVO ENDEREÇO:");
 				                				endereco=input.next();
 				                				doador.setEndereco(endereco);
 				                				System.out.println("TELEFONE ATUALIZADO!!");
+				                				
+				                				input = new Scanner(System.in);
 				                				break;
 				                			default:
 				                				break;
@@ -668,15 +711,36 @@ public class AbrigoAnimais {
 			                		case 4:
 			                			System.out.println("DIGITE O CPF DO DOADOR:");
 			                			cpf=input.next();
-			                			doador = controller.buscarDoador(cpf);
-			                			System.out.println("NOME:" + doador.getNome());
-			                			dataNascimento=doador.getDataNascimento();
-			                			System.out.println("DATA DE NASCIMENTO:" + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
-			                			System.out.println("CPF:" + doador.getCpf());
-			                			System.out.println("TELEFONE:" + doador.getTelefone());
-			                			System.out.println("ENDEREÇO: "+doador.getEndereco());
+			                			
+			                			try {
+			                				doador = controller.buscarDoador(cpf);
+				                			System.out.println("NOME:" + doador.getNome());
+				                			dataNascimento=doador.getDataNascimento();
+				                			System.out.println("DATA DE NASCIMENTO:" + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
+				                			System.out.println("CPF:" + doador.getCpf());
+				                			System.out.println("TELEFONE:" + doador.getTelefone());
+				                			System.out.println("ENDEREÇO: "+doador.getEndereco());
+				                			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+			                			} catch (DoadorNaoEncontradoException error) {
+			                				System.out.println(error.getMessage());
+			                			}
+			                			
 			                			break;
 			                		case 5:
+			                			arrDoadores = controller.buscarArrDoadores();
+			                			
+			                			for (int i=0; i<arrDoadores.length; i++) {
+			                				if (arrDoadores[i]!=null) {
+					                			System.out.println("NOME:" + arrDoadores[i].getNome());
+					                			dataNascimento=arrDoadores[i].getDataNascimento();
+					                			System.out.println("DATA DE NASCIMENTO:" + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
+					                			System.out.println("CPF:" + arrDoadores[i].getCpf());
+					                			System.out.println("TELEFONE:" + arrDoadores[i].getTelefone());
+					                			System.out.println("ENDEREÇO: "+arrDoadores[i].getEndereco());
+					                			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+			                				}
+			                			}
+			                			
 			                			run5=false;
 			                			break;
 			                		default:
