@@ -32,7 +32,7 @@ public class AbrigoAnimais {
         /*ARRAYS*/
         Usuario [] arrUsuarios = new Usuario [100];
         /*Adotante [] arrAdotantes = new Adotante[100];*/
-        Voluntario [] arrVoluntarios = new Voluntario[100];
+        Voluntario [] arrVoluntarios;
         
         /*OBJETOS*/
         Animal animal;
@@ -72,11 +72,12 @@ public class AbrigoAnimais {
 		   }
        }
        
+      System.out.println("\n");
       
 		if (usuarioAdmin.geteAdmin()) { //SE O USUARIO FOR ADMINISTRADOR
 		    //MENU DO USUARIO ADMIN
 			
-		    	System.out.println("BEM-VINDO AO ABRIGO DE ANIMAIS!!");
+		    	System.out.println("------ ABRIGO DE ANIMAIS ------");
                 System.out.println("DIGITE A OPCAO DESEJADA:");
                 System.out.println("[1] - AREA DO USUARIO");
                 System.out.println("[2] - AREA DO ANIMAL");
@@ -86,11 +87,13 @@ public class AbrigoAnimais {
                 System.out.println("[6] - SAIR");
                 resulmenu1 = input.nextInt();
                 
+                System.out.println("\n");
+                
                 while (run2) {
                 	run2 = true;
                 	switch (resulmenu1) {
 		                case 1: 
-			                    System.out.println("**** MENU DO USUARIO ****");
+			                    System.out.println("------ MENU DO USUARIO ------");
 			                    System.out.println("[1] - REALIZAR CADASTRO");
 			                    System.out.println("[2] - ATUALIZAR INFORMACOES PESSOAIS");
 			                    System.out.println("[3] - ATUALIZAR LOGIN E SENHA");
@@ -241,7 +244,7 @@ public class AbrigoAnimais {
 		                case 2: //*** AREA DO ANIMAL ****
 		                	run3=true;
 		                	while (run3) {
-			                	System.out.println("**** AREA DO ANIMAL ****");
+			                	System.out.println("------ AREA DO ANIMAL ------");
 			                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
 			                    System.out.println("[2] - ATUALIZAR CADASTRO");
 			                    System.out.println("[3] - LISTAR ANIMAIS DISPONIVEIS PARA ADOCAO");
@@ -377,23 +380,25 @@ public class AbrigoAnimais {
 		                case 3:
 		                		run4=true;
 		                		while (run4) {
-			                	    System.out.println("**** MENU DO VOLUNTÁRIO ****");
+			                	    System.out.println("------ MENU DO VOLUNTÁRIO ------");
 				                    System.out.println("[1] - CADASTRO");
 				                    System.out.println("[2] - ATUALIZAR INFORMACOES PESSOAIS");
 				                    System.out.println("[3] - ATUALIZAR DIAS DE VISITA");
 				                    System.out.println("[4] - ATUALIZAR HORÁRIO DE VISITA");
 				                    System.out.println("[5] - BUSCAR VOLUNTÁRIO");
 				                    System.out.println("[6] - LISTAR VOLUNTÁRIOS");
-				                    System.out.println("[7] - DESATIVAR CADASTRO");
+				                    System.out.println("[7] - DESVINCULAR CADASTRO");
 				                    System.out.println("[8] - SAIR");
 				                    resulmenuVoluntarios = input.nextInt();
+				                    
+				                    System.out.println("\n");
 				                    
 				                    switch (resulmenuVoluntarios) {
 				                    
 				                    	case 1:
-				                    		System.out.println("Digite o seu nome:");
+				                    		System.out.println("NOME:");
 				                    		nome = input.next();
-				                    		System.out.println("Digite o seu cpf:");
+				                    		System.out.println("CPF:");
 				                    		cpf = input.next();
 				                    		System.out.println("DIA DE NASCIMENTO:");
 				                			dataNascimento[0]=input.nextInt();
@@ -401,41 +406,42 @@ public class AbrigoAnimais {
 				                			dataNascimento[1]=input.nextInt();
 				                			System.out.println("ANO DE NASCIMENTO:");
 				                			dataNascimento[2]=input.nextInt();
-				                    		System.out.println("Digite o seu telefone:");
+				                    		System.out.println("TELEFONE:");
 				                    		telefone = input.next();
-				                    		System.out.println("Digite os dias da semana que você quer se voluntariar:");
+				                    		System.out.println("DIAS DE VISITA:");
 				                    		System.out.println("[1] SIM / [2] NÃO");
 				                    		
-				                    		System.out.println("Segunda-feira");
+				                    		System.out.println("SEGUNDA");
 				                    		diasVoluntario [0] = input.nextInt();
 				                    		
-				                    		System.out.println("Terça-feira");
+				                    		System.out.println("TERÇA");
 				                    		diasVoluntario [1] = input.nextInt();
 				                    		
-				                    		System.out.println("Quarta-feira");
+				                    		System.out.println("QUARTA");
 				                    		diasVoluntario [2] = input.nextInt();
 				                    		
-				                    		System.out.println("Quinta-feira");
+				                    		System.out.println("QUINTA");
 				                    		diasVoluntario [3] = input.nextInt();
 				                    		
-				                    		System.out.println("Sexta-feira");
+				                    		System.out.println("SEXTA");
 				                    		diasVoluntario [4] = input.nextInt();
 				                    		
-				                    		System.out.println("Sabado");
+				                    		System.out.println("SÁBADO");
 				                    		diasVoluntario [5] = input.nextInt();
 				                    		
-				                    		System.out.println("**** Lembrando que são funcionamos de 8h as 20h ****");
-				                    		System.out.println("Digite o horário de entrada que você pode estar como voluntário:");
+//				                    		System.out.println("**** Lembrando que são funcionamos de 8h as 20h ****");
+				                    		System.out.println("HORÁRIO DE ENTRADA:");
 				                    		horarioInicial = input.nextInt();
-				                    		System.out.println("Digite o horário de saída que você pode estar como voluntário:");
+				                    		System.out.println("HORÁRIO DE SAÍDA:");
 				                    		horarioFinal = input.nextInt();
 				                    		
 				                    		
 				                    		try{
 				                    			controller.verificarCPFVoluntario(cpf);
 				                    			voluntario = new Voluntario(nome, cpf, dataNascimento, telefone, diasVoluntario, horarioInicial, horarioFinal);
-				                    			System.out.println("USUÁRIO CADASTRADO COM SUCESSO!");
 				                    			controller.cadastrarVoluntario(voluntario);
+				                    			System.out.println("USUÁRIO CADASTRADO COM SUCESSO!");
+				                    			System.out.println("\n");
 				                    		} catch (CPFInvalidoException error) {
 				                    			System.out.println(error.getMessage());
 				                    		} catch (TelefoneInvalidoException error) {
@@ -451,104 +457,127 @@ public class AbrigoAnimais {
 				                    		break;
 				                    		
 				                    	case 2:
-				                    		
-				                    		System.out.println("Digite o cpf do voluntário desejado:");
+				                    		System.out.println("DIGITE O CPF DO USUÁRIO:");
 				                    		cpf = input.next();
 				                    		
-				                    		//CPF NAO ENCONTRADO E CPF INVALIDO
-				                    		
-				                    		for (int i=0; i<arrVoluntarios.length;i++) {
-				                    			if (arrVoluntarios[i]!=null && arrVoluntarios[i].getCpf().equals(cpf)) {
-				                    				voluntario = arrVoluntarios[i];
-				                    				break;
-				                    			}
+				                    		try {
+				                    			voluntario = controller.buscarVoluntario(cpf);
+				                    		} catch (VoluntarioNaoEncontradoException error) {
+				                    			System.out.println(error.getMessage());
+				                    			break;
 				                    		}
 				                    		
-				                    		System.out.println("O que deseja atualizar?");
-				                    		System.out.println("[1] - Nome");
-				                    		System.out.println("[2] - CPF");
-				                    		System.out.println("[3] - Telefone");
-				                    		
-				                    		menuAtualizarInfoVoluntarios = input.nextInt();
-				                    		
-				                    		switch (menuAtualizarInfoVoluntarios) {
-				                    			case 1: 
+				                    		if (voluntario!=null) {
+				                    			System.out.println("[1] - NOME");
+				                    			System.out.println("[2] - CPF");
+				                    			System.out.println("[3] - TELEFONE");
+				                    			menuAtualizarInfoVoluntarios = input.nextInt();
+				                    			
+				                    			switch (menuAtualizarInfoVoluntarios) {
+					                    			case 1: 
+					                    				
+					                    				System.out.println("DIGITE O NOVO NOME:");
+					                    				nome = input.next();
+					                    				voluntario.setNome(nome);
+					                    				break;
+					                    				
+					                    			case 2:
+					                    				System.out.println("DIGITE O NOVO CPF");
+					                    				cpf = input.next();
+					                    				
+					                    				try {
+					                    					voluntario.setCpf(cpf);
+					                    				} catch (CPFInvalidoException error) {
+					                    					System.out.println(error.getMessage());
+					                    				}
+					                    				
+					                    				break;
+					                    			case 3:
+					                    				
+					                    				System.out.println("DIGITE O NOVO TELEFONE:");
+					                    				telefone = input.next();
 				                    				
-				                    				System.out.println("Digite o seu novo nome:");
-				                    				nome = input.next();
-				                    				voluntario.setNome(nome);
-				                    				break;
-				                    				
-				                    			case 2:
-				                    				System.out.println("Digite o seu novo cpf:");
-				                    				cpf = input.next();
-				                    				
-				                    				try {
-				                    					voluntario.setCpf(cpf);
-				                    				} catch (CPFInvalidoException error) {
-				                    					System.out.println(error.getMessage());
+					                    				try {
+					                    					voluntario.setTelefone(telefone);
+					                    				} catch (TelefoneInvalidoException error) {
+					                    					System.out.println(error.getMessage());
+					                    				}
+					                    				
+					                    				break;
+					                    				
+					                    			default:
+					                    				break;
 				                    				}
-				                    				
-				                    				break;
-				                    			case 3:
-				                    				System.out.println("Digite o seu novo telefone:");
-				                    				telefone = input.next();
-				                    				
-				                    				try {
-				                    					voluntario.setTelefone(telefone);
-				                    				} catch (TelefoneInvalidoException error) {
-				                    					System.out.println(error.getMessage());
-				                    				}
-				                    				
-				                    				break;
-				                    			default:
-				                    				break;
-				                    		}
-				                    	case 3:
-				                    		diasVoluntario=null;
-				                    		
-				                    		System.out.println("Digite os dias da semana que você quer se voluntariar:");
-				                    		System.out.println("[1] SIM / [2] NÃO");
-				                    		
-				                    		System.out.println("Segunda-feira");
-				                    		diasVoluntario [0] = input.nextInt();
-				                    		
-				                    		System.out.println("Terça-feira");
-				                    		diasVoluntario [1] = input.nextInt();
-				                    		
-				                    		System.out.println("Quarta-feira");
-				                    		diasVoluntario [2] = input.nextInt();
-				                    		
-				                    		System.out.println("Quinta-feira");
-				                    		diasVoluntario [3] = input.nextInt();
-				                    		
-				                    		System.out.println("Sexta-feira");
-				                    		diasVoluntario [4] = input.nextInt();
-				                    		
-				                    		System.out.println("Sabado");
-				                    		diasVoluntario [5] = input.nextInt();
-				                    		
-				                    		voluntario.setDias(diasVoluntario);
+				                    		} 
 				                    		break;
+				                    	case 3:
+				                    		diasVoluntario = new int [6];
 				                    		
-				                    	case 4:
-				                    		System.out.println("**** Lembrando que são funcionamos de 8h as 20h ****");
-				                    		System.out.println("Digite o novo horário de entrada que você pode estar como voluntário:");
-				                    		horarioInicial = input.nextInt();
-				                    		System.out.println("Digite o novo horário de saída que você pode estar como voluntário:");
-				                    		horarioFinal = input.nextInt();
+				                    		System.out.println("DIGITE O CPF DO USUÁRIO:");
+				                    		cpf = input.next();
 				                    		
 				                    		try {
-				                    			voluntario.setHorarioInicial(horarioInicial);
-				                    			voluntario.setHorarioFinal(horarioFinal);
-				                    		} catch (HorarioExcedidoException error) {
+				                    			voluntario=controller.buscarVoluntario(cpf);
+				                    			System.out.println("DIAS DE VISITA:");
+					                    		System.out.println("[1] SIM / [2] NÃO");
+					                    		
+					                    		System.out.println("SEGUNDA");
+					                    		diasVoluntario [0] = input.nextInt();
+					                    		
+					                    		System.out.println("TERÇA");
+					                    		diasVoluntario [1] = input.nextInt();
+					                    		
+					                    		System.out.println("QUARTA");
+					                    		diasVoluntario [2] = input.nextInt();
+					                    		
+					                    		System.out.println("QUINTA");
+					                    		diasVoluntario [3] = input.nextInt();
+					                    		
+					                    		System.out.println("SEXTA");
+					                    		diasVoluntario [4] = input.nextInt();
+					                    		
+					                    		System.out.println("SÁBADO");
+					                    		diasVoluntario [5] = input.nextInt();
+					                    		
+					                    		voluntario.setDias(diasVoluntario);
+				                    		} catch (VoluntarioNaoEncontradoException error) {
 				                    			System.out.println(error.getMessage());
 				                    		}
 				                    		
 				                    		break;
+				                    		
+				                    	case 4:
+				                    		
+				                    		System.out.println("DIGITE O CPF DO USUÁRIO:");
+				                    		cpf = input.next();
+				                    		
+				                    		try {
+				                    			voluntario=controller.buscarVoluntario(cpf);
+				                    		} catch (VoluntarioNaoEncontradoException error) {
+				                    			System.out.println(error.getMessage());
+				                    		}
+				                    		
+				                    		if (voluntario!=null) {
+					                    		System.out.println("HORÁRIO DE ENTRADA:");
+					                    		horarioInicial = input.nextInt();
+					                    		System.out.println("HORÁRIO DE SAÍDA:");
+					                    		horarioFinal = input.nextInt();
+				                    		
+					                    		try {
+					                    			voluntario.setHorarioInicial(horarioInicial);
+					                    			voluntario.setHorarioFinal(horarioFinal);
+					                    		} catch (HorarioExcedidoException error) {
+					                    			System.out.println(error.getMessage());
+					                    		}
+				                    		} 
+				                    		
+				                    		break;
+				                    		
 				                    	case 5:
 				                    		System.out.println("DIGITE O CPF DO VOLUNTÁRIO:");
 				                			cpf=input.next();
+				                			
+				                			System.out.println("\n");
 				                			
 				                			try {
 				                				voluntario = controller.buscarVoluntario(cpf);
@@ -572,17 +601,56 @@ public class AbrigoAnimais {
 					                			if (diasVoluntario[5]==1) 
 					                				System.out.println("SABÁDO");
 					                			
-					                			System.out.println("HORÁRIO: " + voluntario.getHorarioInicial() + "às" + voluntario.getHorarioFinal());
+					                			System.out.println("HORÁRIO: " + voluntario.getHorarioInicial() + " às " + voluntario.getHorarioFinal());
 					                		
-					                			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+					                			System.out.println("\n");
 				                			} catch (VoluntarioNaoEncontradoException error) {
 				                				System.out.println(error.getMessage());
 				                			}
 				                			
 				                			break;
-				                    	case 7:
-				                    		//deixar array null;
+				                    	case 6:
+				                    		
+				                    		arrVoluntarios=controller.buscarArrVoluntarios();
+				                    		for (int i=0; i<arrVoluntarios.length;i++) {
+				                    			if (arrVoluntarios[i]!=null) {
+					                    			System.out.println("NOME:" + arrVoluntarios[i].getNome());
+						                			dataNascimento=arrVoluntarios[i].getDataNascimento();
+						                			System.out.println("DATA DE NASCIMENTO:" + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
+						                			System.out.println("CPF:" + arrVoluntarios[i].getCpf());
+						                			System.out.println("TELEFONE:" + arrVoluntarios[i].getTelefone());
+						                			
+						                			diasVoluntario = arrVoluntarios[i].getDiasVoluntario();
+						                			System.out.println("DIAS:");
+						                			if (diasVoluntario[0]==1) 
+						                				System.out.println("SEGUNDA");
+						                			if (diasVoluntario[1]==1) 
+						                				System.out.println("TERÇA");
+						                			if (diasVoluntario[2]==1) 
+						                				System.out.println("QUARTA");
+						                			if (diasVoluntario[3]==1) 
+						                				System.out.println("QUINTA");
+						                			if (diasVoluntario[4]==1) 
+						                				System.out.println("SEXTA");
+						                			if (diasVoluntario[5]==1) 
+						                				System.out.println("SABÁDO");
+						                			
+						                			System.out.println("HORÁRIO: " + arrVoluntarios[i].getHorarioInicial() + " às " + arrVoluntarios[i].getHorarioFinal());
+						                			
+						                			System.out.println("\n");
+				                    			}
+				                    		}
 				                    		break;
+				                    	case 7:
+				                    		System.out.println("DIGITE O CPF DO VOLUNTÁRIO A SER DESVINCULADO DO NOSSO ABRIGO:");
+				                			cpf=input.next();
+				                			if (controller.desvincularVoluntario(cpf)==1) {
+				                				System.out.println("VOLUNTÁRIO DESVINCULADO!!");
+				                			} else {
+				                				System.out.println("VOLUNTÁRIO NÃO FOI DESVINCULADO, POR FAVOR VERIFIQUE O CPF E DIGITE UM EXISTENTE NO SISTEMA!!");
+				                			}
+				                			
+				                			break;
 				                    	case 8:
 				                    		run4=false;
 				                    		break;
@@ -597,7 +665,7 @@ public class AbrigoAnimais {
 		                case 5: 
 		                	run5=true;
 		                	while (run5) {
-			                	System.out.println("*** BEM-VINDO AO MENU DO DOADOR ***");
+			                	System.out.println("------ BEM-VINDO AO MENU DO DOADOR ------");
 			                	System.out.println("[1] - CADASTRO");
 			                	System.out.println("[2] - ATUALIZAR");
 			                	System.out.println("[3] - TIRAR VINCULO");

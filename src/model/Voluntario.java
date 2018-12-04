@@ -2,6 +2,7 @@ package model;
 import exception.CPFInvalidoException;
 import exception.HorarioExcedidoException;
 import exception.IdadeMaximaAtingidaException;
+import exception.MesInvalidoException;
 import exception.TelefoneInvalidoException;
 
 public class Voluntario {
@@ -10,7 +11,7 @@ public class Voluntario {
 	private int dataNascimento [], diasVoluntario[], horarioInicial, horarioFinal;
 	private boolean ativo;
 	
-	public Voluntario (String nome, String cpf, int dataNascimento[], String telefone, int diasVoluntario [], int horarioInicial, int horarioFinal) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException, HorarioExcedidoException {
+	public Voluntario (String nome, String cpf, int dataNascimento[], String telefone, int diasVoluntario [], int horarioInicial, int horarioFinal) throws CPFInvalidoException, TelefoneInvalidoException, IdadeMaximaAtingidaException, HorarioExcedidoException, MesInvalidoException {
 		
 		if (horarioInicial<8 || horarioInicial>20) {
 			throw new HorarioExcedidoException("Horario não permitido");
@@ -19,6 +20,9 @@ public class Voluntario {
 		if (horarioFinal<8 || horarioFinal>20) {
 			throw new HorarioExcedidoException("Horario não permitido");
 		}
+		
+		if (dataNascimento[1]>12) 
+			throw new MesInvalidoException("DIGITE UM MÊS VÁLIDO");
 		
 		if(dataNascimento[2]>1999) {
 			throw new IdadeMaximaAtingidaException("Idade m�xima para ser volunt�rio � a partir dos 18 anos");

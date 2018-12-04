@@ -143,8 +143,23 @@ public class AbrigoAnimaisController {
     	return 0;
     }
     
+    public int desvincularVoluntario (String cpf) {
+    	for (int i=0; i<arrVoluntarios.length;i++) {
+    		if(arrVoluntarios[i]!=null) {
+    			if (arrVoluntarios[i].getCpf().equals(cpf)) 
+    				arrVoluntarios[i]=null;
+    			return 1;
+    		}
+    	}
+    	return 0;
+    }
+    
     public Doador [] buscarArrDoadores() {
     	return arrDoadores;
+    }
+    
+    public Voluntario [] buscarArrVoluntarios() {
+    	return arrVoluntarios;
     }
     
     
