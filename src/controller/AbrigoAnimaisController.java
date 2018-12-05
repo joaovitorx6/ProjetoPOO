@@ -4,12 +4,14 @@ import model.Adotante;
 import model.Animal;
 import model.Doador;
 import model.Voluntario;
+import model.Doacao;
 import exception.AnimalNaoEncontradoException;
 import exception.CPFInvalidoException;
 import exception.DoadorNaoEncontradoException;
 import exception.VoluntarioNaoEncontradoException;
 import exception.AdotanteNaoEncontradoException;
 import exception.CPFExistenteException;
+import exception.DoacaoNaoEncontradaException;
 
 public class AbrigoAnimaisController {
 	
@@ -17,10 +19,12 @@ public class AbrigoAnimaisController {
     Adotante [] arrAdotantes = new Adotante[100];
     Doador [] arrDoadores = new Doador[100];
     Voluntario [] arrVoluntarios = new Voluntario[100];
+    Doacao [] arrDoacoes = new Doacao [100];
     Animal [] arrAnimaisAux;
     Adotante adotante;
+    Doacao [] arrDoacoesAux;
     
-    int indiceAnimais=0, iDoador=0, iVoluntario=0;
+    int indiceAnimais=0, iDoador=0, iVoluntario=0, iDoacao=0, iAdotante;
     
     //BUSCAR ANIMAL CADASTRADO POR ID
     public Animal buscarAnimalporID(int id) throws AnimalNaoEncontradoException {
@@ -63,6 +67,142 @@ public class AbrigoAnimaisController {
     	indiceAnimais++;
     }
     
+    public Animal [] listarAnimaisPorTipo (int tipo) throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+    		if(tipo==3) {
+    			arrAnimaisAux = arrAnimais;
+    		}else {
+    			if(arrAnimais[i]!=null && arrAnimais[i].getTipo()==tipo) {
+    				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+    				indiceAnimaisAux++;
+    			}
+    		}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    public Animal [] listarAnimaisCastrados() throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+			if(arrAnimais[i]!=null && arrAnimais[i].getCastrado()==true) {
+				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+				indiceAnimaisAux++;
+			}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    public Animal [] listarAnimaisNaoCastrados() throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+			if(arrAnimais[i]!=null && arrAnimais[i].getCastrado()==false) {
+				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+				indiceAnimaisAux++;
+			}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    public Animal [] listarAnimaisVermifugados() throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+			if(arrAnimais[i]!=null && arrAnimais[i].getVermifugado()==true) {
+				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+				indiceAnimaisAux++;
+			}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    public Animal [] listarAnimaisNaoVermifugados() throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+			if(arrAnimais[i]!=null && arrAnimais[i].getVermifugado()==false) {
+				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+				indiceAnimaisAux++;
+			}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    public Animal [] listarAnimaisAdotados() throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+			if(arrAnimais[i]!=null && arrAnimais[i].getAdotado()==true) {
+				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+				indiceAnimaisAux++;
+			}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    public Animal [] listarAnimaisNaoAdotados() throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	arrAnimaisAux=null;
+    	
+    	for (int i=0; i<arrAnimais.length; i++) {
+			if(arrAnimais[i]!=null && arrAnimais[i].getAdotado()==false) {
+				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
+				indiceAnimaisAux++;
+			}
+    	}
+    	
+    	if(arrAnimais==null) {
+    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	}
+    	
+    	return arrAnimais;
+    }
+    
+    //CADASTRAR ADOTANTE NO ARRAY
+    public void cadastrarAdotante(Adotante adotante) {
+    	arrAdotantes[iAdotante] = adotante;
+    	iAdotante++;
+    }
+    
     //BUSCANDO ADOTANTE NO ARRAY
     public Adotante buscarAdotante(String cpf) throws CPFInvalidoException, AdotanteNaoEncontradoException{
     	if(cpf.length()!=11)
@@ -82,6 +222,38 @@ public class AbrigoAnimaisController {
 		
 		throw new AdotanteNaoEncontradoException("Adotante nao cadastrado");
 		
+    }
+    
+    //REMOVER ADOTANTE
+    public void removerAdotante(String cpf) {
+		for (int i=0;i<arrAdotantes.length; i++) {
+			if(arrAdotantes[i]!=null && arrAdotantes[i].getCpf().equals(cpf)) {
+				arrAdotantes[i] = null;
+			}
+		}
+    }
+    
+    //LISTAR ADOTANTES
+    public Adotante [] listarAdotantes(){
+    	return arrAdotantes;
+    }
+    
+    //LISTAR ANIMAIS ADOTADOS POR ADOTANTE
+    public Animal[] listarAnimaisAdotadosPorAdotante(String cpf) throws AnimalNaoEncontradoException {
+    	int indiceAnimaisAux=0;
+    	for (int i=0;i<arrAdotantes.length; i++) {
+			if(arrAdotantes[i]!=null && arrAdotantes[i].getCpf().equals(cpf)) {
+				arrAnimaisAux[indiceAnimaisAux] = null;
+				indiceAnimaisAux++;
+			}
+		}
+    	
+    	if(arrAnimaisAux==null) {
+    		throw new AnimalNaoEncontradoException("Adotante nao possui animais adotados.");
+    	}
+    	
+    	return arrAnimaisAux;
+    	
     }
     
     public void cadastrarDoador (Doador doador) {
@@ -162,5 +334,28 @@ public class AbrigoAnimaisController {
     	return arrVoluntarios;
     }
     
+    public void cadastrarDoacoes(Doacao doacao) {
+    	arrDoacoes[iDoacao] = doacao;
+    	iDoacao++;
+    }
     
+    public Doacao [] listarDoacoes() {
+    	return arrDoacoes;
+    }
+    
+    public Doacao [] listarDoacoesPorDoador(Doador doador) throws DoacaoNaoEncontradaException{
+    	int indiceDoacoesAux=0;
+    	for (int i=0; i<arrDoacoes.length; i++) {
+    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().getCpf().equals(doador.getCpf())) {
+    			arrDoacoesAux[indiceDoacoesAux]=arrDoacoes[i];
+    			indiceDoacoesAux++;
+    		}
+    	}
+    	
+    	if(arrDoacoesAux==null) {
+    		throw new DoacaoNaoEncontradaException("Doador nao possue doacoes");
+    	}
+    	
+    	return arrDoacoesAux;
+    }
 }

@@ -5,9 +5,8 @@ import exception.CPFInvalidoException;
 
 public class Adotante {
     
-    public String nome, dataNascimento, cpf, sexo, email, telefoneCelular, telefoneFixo;
-    public String rua, cidade, bairro, CEP, UF, nacionalidade, zona;
-    //maior de 18 anos
+    private String nome, cpf, email, telefone, rua, cidade, bairro, CEP, UF;
+    private int [] dataNascimento;
     
     int contadorAnimal=0;
 
@@ -17,20 +16,16 @@ public class Adotante {
         this.nome=null;
         this.dataNascimento=null;
         this.cpf=null;
-        this.sexo=null;
         this.email=null;
-        this.telefoneCelular=null;
-        this.telefoneFixo=null;
+        this.telefone=null;
         this.rua=null;
         this.cidade=null;
         this.bairro=null;
         this.CEP=null;
         this.UF=null;
-        this.nacionalidade=null;
-        this.zona=null;
     }
     
-    public Adotante (String nome, String dataNascimento, String cpf, String sexo, String email, String telefoneCelular, String telefoneFixo, String rua, String cidade, String bairro, String CEP, String UF, String nacionalidade, String zona) throws CPFInvalidoException {
+    public Adotante (String nome, int [] dataNascimento, String cpf, String email, String telefone, String rua, String cidade, String bairro, String CEP, String UF) throws CPFInvalidoException {
     	if(cpf.length()!=11)
 			throw new CPFInvalidoException("CPF deve conter 11 digitos");
 		for (int i=0; i<cpf.length();i++) {
@@ -42,33 +37,25 @@ public class Adotante {
         this.nome=nome;
         this.dataNascimento=dataNascimento;
         this.cpf=cpf;
-        this.sexo=sexo;
         this.email=email;
-        this.telefoneCelular=telefoneCelular;
-        this.telefoneFixo=telefoneFixo;
+        this.telefone=telefone;
         this.rua=rua;
         this.cidade=cidade;
         this.bairro=bairro;
         this.CEP=CEP;
         this.UF=UF;
-        this.nacionalidade=nacionalidade;
-        this.zona=zona;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public String getDataNascimento() {
+    public int [] getDataNascimento() {
         return dataNascimento;
     }
 
     public String getCpf() {
         return cpf;
-    }
-
-    public String getSexo() {
-        return sexo;
     }
 
     public String getEmail() {
@@ -87,28 +74,16 @@ public class Adotante {
         return cidade;
     }
 
-    public String getNacionalidade() {
-        return nacionalidade;
-    }
-
     public String getRua() {
         return rua;
     }
 
-    public String getTelefoneCelular() {
-        return telefoneCelular;
-    }
-
-    public String getTelefoneFixo() {
-        return telefoneFixo;
+    public String getTelefone() {
+        return telefone;
     }
 
     public String getUF() {
         return UF;
-    }
-
-    public String getZona() {
-        return zona;
     }
 
     public void setBairro(String bairro) {
@@ -131,16 +106,12 @@ public class Adotante {
         this.cpf = cpf;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(int [] dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
     }
 
     public void setNome(String nome) {
@@ -151,20 +122,8 @@ public class Adotante {
         this.rua = rua;
     }
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public void setTelefoneCelular(String telefoneCelular) {
-        this.telefoneCelular = telefoneCelular;
-    }
-
-    public void setTelefoneFixo(String telefoneFixo) {
-        this.telefoneFixo = telefoneFixo;
-    }
-
-    public void setZona(String zona) {
-        this.zona = zona;
+    public void setTelefoneCelular(String telefone) {
+        this.telefone = telefone;
     }
 
     public void addAnimal (Animal animal) {
@@ -182,12 +141,6 @@ public class Adotante {
         
         throw new AnimalNaoEncontradoException ("Animal nao encontrado");
     }
-
-    //remover animal, seria colocar nulo no arr, ou tirar a ligação dele com o adotante??
-    //nesse caso acredito que seja retirar a ligacao dele com o adotante. 
-    
-    //feedback de animal removido seria uma exceção?
-    //R: n�o porque n�o � um "erro" como um cpf digitado incorreto p. exemplo. Acredito eu.
     
     public void removerAnimal (int idAnimal){
         for (int i=0; i<arrAnimal.length; i++){

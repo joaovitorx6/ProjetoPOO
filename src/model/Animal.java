@@ -71,4 +71,24 @@ public class Animal {
 		return disponivelParaAdocao;
 	}
 	
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+	
+	public void setDescricao (String descricao) {
+		this.descricao = descricao;
+	}
+	
+	public void animalCastrado() {
+		this.castrado = true;
+	}
+	
+	public void animalVermifugado() {
+		this.vermifugado = true;
+	}
+	
+	public void animalDisponivelParaAdocao() {
+		this.disponivelParaAdocao = true;
+	}
+	
 }
