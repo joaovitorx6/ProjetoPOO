@@ -10,7 +10,7 @@ public class AbrigoAnimais {
     public static void main (String[] args) {
         
         /*VARIAVEIS*/
-        int idade, opcao4, resulmenu1, resulmenu2,resulmenu3,resulmenuAnimais, resulmenuVoluntarios, indiceUsuarios=1,
+        int idade, opcao4, resulmenu1, resulmenu2=0,resulmenu3=0,resulmenuAnimais=0, resulmenuVoluntarios=0, indiceUsuarios=1,
         		id, indiceAnimais=0, tipo,
         		indiceAdotantes=0, resulmenuAdotantes=0,
         		menuAtualizarInfoVoluntarios, diasVoluntario [] = new int [6], horarioInicial, horarioFinal, //VOLUNTÁRIO
@@ -57,10 +57,10 @@ public class AbrigoAnimais {
         } catch (LoginExcedidoException e) {
         	System.out.println(e.getMessage());
         }
-        
+  
 	while (!result) {	
 		   try {
-		        	
+		       System.out.println("------ ÁREA DE LOGIN ------");
 		      /*VERIFICA O LOGIN E PEGA O OBJETO DO USUARIO*/
 		      System.out.println("DIGITE O SEU LOGIN:");
 		      login = input.next();
@@ -72,12 +72,15 @@ public class AbrigoAnimais {
 		   } catch(LoginInvalidoException error){
 	       	 System.out.println(error.getMessage());
 		   }
-       }
-       
+      }
+    
       System.out.println("\n");
       
 		if (usuarioAdmin.geteAdmin()) { //SE O USUARIO FOR ADMINISTRADOR
 		    //MENU DO USUARIO ADMIN
+			
+			while (run) {
+				
 			
 		    	System.out.println("------ ABRIGO DE ANIMAIS ------");
                 System.out.println("DIGITE A OPCAO DESEJADA:");
@@ -92,10 +95,9 @@ public class AbrigoAnimais {
                 
                 System.out.println("\n");
                 
-                while (run2) {
-                	run2 = true;
-                	switch (resulmenu1) {
+                switch (resulmenu1) {
 		                case 1: 
+		                	while (resulmenu2!=6) {
 			                    System.out.println("------ MENU DO USUARIO ------");
 			                    System.out.println("[1] - REALIZAR CADASTRO");
 			                    System.out.println("[2] - ATUALIZAR INFORMACOES PESSOAIS");
@@ -237,16 +239,16 @@ public class AbrigoAnimais {
 			                    	  	}
 			                        	break;
 			                      case 6:
-			                    	  run2=false;
+			                    	  resulmenu2=6;
 			                    	  break;
 			                      default:
 			                    	  break;
 			                    
 			                   }//FIM DO SWITCH DO USUARIO
-			                    
+		                	} // FIM DO WHILE DO USUÁRIO
+		                break;
 		                case 2: //*** AREA DO ANIMAL ****
-		                	run3=true;
-		                	while (run3) {
+		                	while (resulmenuAnimais!=6) {
 			                	System.out.println("----- AREA DO ANIMAL -----");
 			                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
 			                    System.out.println("[2] - ATUALIZAR CADASTRO");
@@ -627,17 +629,16 @@ public class AbrigoAnimais {
 			                    		break;
 			                    		
 			                    	case 6: //VOLTAR PARA O MENU PRINCIPAL
-			                    		run3=false;
+			                    		resulmenuAnimais=6;
 			                    		break;
-			                    		
+			                    	default:
+			                    		System.out.println("DIGITE UMA OPÇÃO VÁLIDA");
 			                    } //FIM DO SWITCH
-		                	}//FIM DO WHILE DO MENU DE ANIMAL    
-			                break; ///////FIM DA AREA DO ANIMAL//////////
-		                	
-
+			                    
+		                	}//FIM DO WHILE DO MENU DE ANIMAL 
+		                break;
 		                case 3: //MENU DO VOLUNTÁRIO
-		                		run4=true;
-		                		while (run4) {
+		                		while (resulmenuVoluntarios!=8) {
 			                	    System.out.println("------ MENU DO VOLUNTÁRIO ------");
 				                    System.out.println("[1] - CADASTRO");
 				                    System.out.println("[2] - ATUALIZAR INFORMACOES PESSOAIS");
@@ -912,7 +913,7 @@ public class AbrigoAnimais {
 				                			
 				                			break;
 				                    	case 8:
-				                    		run4=false;
+				                    		resulmenuVoluntarios=8;
 				                    		break;
 				                    	default:
 				                    		break;
@@ -922,7 +923,7 @@ public class AbrigoAnimais {
 		                	
 		                
 		                case 4: //MENU DO ADOTANTE
-		                	while(resulmenuAdotantes!=5) {
+		                	while(resulmenuAdotantes!=6) {
 			                	System.out.println("----- AREA DO ADOTANTE -----");
 			                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
 			                    System.out.println("[2] - BUSCAR CADASTRO POR CPF");
@@ -1079,9 +1080,8 @@ public class AbrigoAnimais {
 		                	break;
 		                	
 		                	
-		                case 5: 
-		                	run5=true;
-		                	while (run5) {
+		                case 5:
+		                	while (menuDoador!=6) {
 			                	System.out.println("------ BEM-VINDO AO MENU DO DOADOR ------");
 			                	System.out.println("[1] - CADASTRO");
 			                	System.out.println("[2] - ATUALIZAR");
@@ -1225,15 +1225,18 @@ public class AbrigoAnimais {
 					                			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
 			                				}
 			                			}
-			                			
-			                			run5=false;
+			                			break;
+			                		case 6:	
+			                			menuDoador=6;
 			                			break;
 			                		default:
 			                			break;
+			                		
 			                	}
 			                	
-			                	break;
 		                	}
+		                	
+		                	break;
 		                	
 		                case 6: //AREA DE DOACOES
 		                	while(menuDoacao!=4) {
@@ -1317,8 +1320,8 @@ public class AbrigoAnimais {
 		                	
 		                	break;
 		                case 7:
-		                	System.out.println("OBRIGADO POR ACESSAR O NOSSO SISTEMA!!");
 		                	run=false;
+		                	System.out.println("OBRIGADO POR ACESSAR O NOSSO SISTEMA!!");
 		                	break;
 		                default:
 		                	break;
@@ -1326,10 +1329,8 @@ public class AbrigoAnimais {
                 } //FIM DO WHILE 
                 }
 		    
-                
-                
-                // ****** SE O USUARIO NAO FOR ADMINISTRADOR ****
-		    
+         
+                // ****** SE O USUARIO NAO FOR ADMINISTRADOR ****  
        }  else if (usuarioAdmin.geteAdmin()==false) {
             	 
             	 while (run) {
