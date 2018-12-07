@@ -1,4 +1,5 @@
 package controller;
+import java.util.*;
 
 import model.Adotante;
 import model.Animal;
@@ -20,9 +21,9 @@ public class AbrigoAnimaisController {
     Doador [] arrDoadores = new Doador[100];
     Voluntario [] arrVoluntarios = new Voluntario[100];
     Doacao [] arrDoacoes = new Doacao [100];
-    Animal [] arrAnimaisAux;
+    ArrayList<Animal> arrAnimaisAux = new ArrayList<Animal>();
     Adotante adotante;
-    Doacao [] arrDoacoesAux;
+    ArrayList<Doacao> arrDoacoesAux = new ArrayList<Doacao>();
     
     int indiceAnimais=0, iDoador=0, iVoluntario=0, iDoacao=0, iAdotante;
     
@@ -39,23 +40,25 @@ public class AbrigoAnimaisController {
     }
     
     //LISTAR ANIMAIS DISPONIVEIS PARA ADOCAO FILTRADOS POR TIPO
-    public Animal [] listarAnimaisDiponiveis(int tipo) throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisDiponiveis(int tipo) throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
+    	if(tipo==3) {
+    		for (int i=0; i<arrAnimais.length; i++) {
+	    		if(arrAnimais[i]!=null && arrAnimais[i].getDisponivelAdocao()==true) {
+	    			arrAnimaisAux.add(arrAnimais[i]);
+	    		}
+	    	}
+		}else {
     	
-    	for (int i=0; i<arrAnimais.length; i++) {
-    		if(tipo==3) {
-    			arrAnimaisAux = arrAnimais;
-    		}else {
-    			if(arrAnimais[i]!=null && arrAnimais[i].getTipo()==tipo && arrAnimais[i].getDisponivelAdocao()==true) {
-    				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-    				indiceAnimaisAux++;
-    			}
-    		}
+	    	for (int i=0; i<arrAnimais.length; i++) {
+	    		if(arrAnimais[i]!=null && arrAnimais[i].getTipo()==tipo && arrAnimais[i].getDisponivelAdocao()==true) {
+	    			arrAnimaisAux.add(arrAnimais[i]);
+	    		}
+	    	}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Não há animais cadastrados com esse parâmetros");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS CADASTRADOS");
     	}
     		
     	return arrAnimaisAux;
@@ -67,134 +70,124 @@ public class AbrigoAnimaisController {
     	indiceAnimais++;
     }
     
-    public Animal [] listarAnimaisPorTipo (int tipo) throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisPorTipo (int tipo) throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
+ 
+		if(tipo==3) {
+			for (int i=0; i<arrAnimais.length; i++) {
+	    		if(arrAnimais[i]!=null) {
+	    			arrAnimaisAux.add(arrAnimais[i]);
+	    		}
+	    	}
+		}else {
+			for (int j=0; j<arrAnimais.length; j++) {
+	    		if(arrAnimais[j]!=null && arrAnimais[j].getTipo()==tipo) {
+	    			arrAnimaisAux.add(arrAnimais[j]);
+	    		}
+	    	}
+		}
     	
-    	for (int i=0; i<arrAnimais.length; i++) {
-    		if(tipo==3) {
-    			arrAnimaisAux = arrAnimais;
-    		}else {
-    			if(arrAnimais[i]!=null && arrAnimais[i].getTipo()==tipo) {
-    				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-    				indiceAnimaisAux++;
-    			}
-    		}
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS CADASTRADOS");
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
-    	}
-    	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
-    public Animal [] listarAnimaisCastrados() throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisCastrados() throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
     	
     	for (int i=0; i<arrAnimais.length; i++) {
 			if(arrAnimais[i]!=null && arrAnimais[i].getCastrado()==true) {
-				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-				indiceAnimaisAux++;
+				arrAnimaisAux.add(arrAnimais[i]);
 			}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS CASTRADOS CADASTRADOS");
     	}
     	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
-    public Animal [] listarAnimaisNaoCastrados() throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisNaoCastrados() throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
     	
     	for (int i=0; i<arrAnimais.length; i++) {
 			if(arrAnimais[i]!=null && arrAnimais[i].getCastrado()==false) {
-				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-				indiceAnimaisAux++;
+				arrAnimaisAux.add(arrAnimais[i]);
 			}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS NAO CASTRADOS CADASTRADOS");
     	}
     	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
-    public Animal [] listarAnimaisVermifugados() throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisVermifugados() throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
     	
     	for (int i=0; i<arrAnimais.length; i++) {
 			if(arrAnimais[i]!=null && arrAnimais[i].getVermifugado()==true) {
-				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-				indiceAnimaisAux++;
+				arrAnimaisAux.add(arrAnimais[i]);
 			}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS VERMIFUGADOS CADASTRADOS");
     	}
     	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
-    public Animal [] listarAnimaisNaoVermifugados() throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisNaoVermifugados() throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
     	
     	for (int i=0; i<arrAnimais.length; i++) {
 			if(arrAnimais[i]!=null && arrAnimais[i].getVermifugado()==false) {
-				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-				indiceAnimaisAux++;
+				arrAnimaisAux.add(arrAnimais[i]);
 			}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS NAO VERMIFUGADOS CADASTRADOS");
     	}
     	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
-    public Animal [] listarAnimaisAdotados() throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisAdotados() throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
     	
     	for (int i=0; i<arrAnimais.length; i++) {
 			if(arrAnimais[i]!=null && arrAnimais[i].getAdotado()==true) {
-				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-				indiceAnimaisAux++;
+				arrAnimaisAux.add(arrAnimais[i]);
 			}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS ADOTADOS CADASTRADOS");
     	}
     	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
-    public Animal [] listarAnimaisNaoAdotados() throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
-    	arrAnimaisAux=null;
+    public ArrayList<Animal> listarAnimaisNaoAdotados() throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
     	
     	for (int i=0; i<arrAnimais.length; i++) {
 			if(arrAnimais[i]!=null && arrAnimais[i].getAdotado()==false) {
-				arrAnimaisAux[indiceAnimaisAux] = arrAnimais[i];
-				indiceAnimaisAux++;
+				arrAnimaisAux.add(arrAnimais[i]);
 			}
     	}
     	
-    	if(arrAnimais==null) {
-    		throw new AnimalNaoEncontradoException("Nao ha animais cadastrados desse tipo");
+    	if(arrAnimaisAux.isEmpty()) {
+    		throw new AnimalNaoEncontradoException("NAO HA ANIMAIS NAO ADOTADOS CADASTRADOS");
     	}
     	
-    	return arrAnimais;
+    	return arrAnimaisAux;
     }
     
     //CADASTRAR ADOTANTE NO ARRAY
@@ -239,16 +232,17 @@ public class AbrigoAnimaisController {
     }
     
     //LISTAR ANIMAIS ADOTADOS POR ADOTANTE
-    public Animal[] listarAnimaisAdotadosPorAdotante(String cpf) throws AnimalNaoEncontradoException {
-    	int indiceAnimaisAux=0;
+    public ArrayList<Animal> listarAnimaisAdotadosPorAdotante(String cpf) throws AnimalNaoEncontradoException {
+    	arrAnimaisAux.clear();
+    	
     	for (int i=0;i<arrAdotantes.length; i++) {
 			if(arrAdotantes[i]!=null && arrAdotantes[i].getCpf().equals(cpf)) {
-				arrAnimaisAux[indiceAnimaisAux] = null;
-				indiceAnimaisAux++;
+				arrAnimaisAux = arrAdotantes[i].listarAnimais();
+				break;
 			}
 		}
     	
-    	if(arrAnimaisAux==null) {
+    	if(arrAnimaisAux.isEmpty()) {
     		throw new AnimalNaoEncontradoException("Adotante nao possui animais adotados.");
     	}
     	
@@ -339,21 +333,31 @@ public class AbrigoAnimaisController {
     	iDoacao++;
     }
     
-    public Doacao [] listarDoacoes() {
-    	return arrDoacoes;
-    }
-    
-    public Doacao [] listarDoacoesPorDoador(Doador doador) throws DoacaoNaoEncontradaException{
-    	int indiceDoacoesAux=0;
+    public ArrayList<Doacao> listarDoacoes() throws DoacaoNaoEncontradaException{
+    	arrDoacoesAux.clear();
     	for (int i=0; i<arrDoacoes.length; i++) {
-    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().getCpf().equals(doador.getCpf())) {
-    			arrDoacoesAux[indiceDoacoesAux]=arrDoacoes[i];
-    			indiceDoacoesAux++;
+    		if(arrDoacoes[i]!=null) {
+    			arrDoacoesAux.add(arrDoacoes[i]);
     		}
     	}
     	
-    	if(arrDoacoesAux==null) {
-    		throw new DoacaoNaoEncontradaException("Doador nao possue doacoes");
+    	if(arrDoacoesAux.isEmpty()) {
+    		throw new DoacaoNaoEncontradaException("NAO HA DOACOES CADASTRADAS");
+    	}
+    	
+    	return arrDoacoesAux;
+    }
+    
+    public ArrayList<Doacao> listarDoacoesPorDoador(String cpf) throws DoacaoNaoEncontradaException{
+    	arrDoacoesAux.clear();
+    	for (int i=0; i<arrDoacoes.length; i++) {
+    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().getCpf().equals(cpf)) {
+    			arrDoacoesAux.add(arrDoacoes[i]);
+    		}
+    	}
+    	
+    	if(arrDoacoesAux.isEmpty()) {
+    		throw new DoacaoNaoEncontradaException("DOADOR NAO REALIZOU NENHUMA DOACAO");
     	}
     	
     	return arrDoacoesAux;
