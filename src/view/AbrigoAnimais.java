@@ -669,8 +669,6 @@ public class AbrigoAnimais {
 				                    		System.out.println("NOME:");
 				                    		nome = input.next();
 				                    		
-				                    		input.nextLine();
-				                    		
 				                    		System.out.println("CPF:");
 				                    		cpf = input.next();
 				                    		System.out.println("DIA DE NASCIMENTO:");
