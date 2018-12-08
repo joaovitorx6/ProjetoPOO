@@ -14,11 +14,11 @@ public class Doacao {
         this.idDoacao=0;
     }
     
-    public Doacao (String descricao, String dataDoacao, Doador doador){
+    public Doacao (String descricao, String dataDoacao, Doador doador, int idDoacao){
         this.descricao=descricao;
         this.dataDoacao=dataDoacao;
         this.doador=doador;
-        this.idDoacao++;
+        this.idDoacao=idDoacao;
     }
     
     public String getDescricao(){

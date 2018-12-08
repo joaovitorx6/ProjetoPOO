@@ -19,6 +19,7 @@ public class Animal {
 		this.vermifugado = false;
 		this.disponivelParaAdocao = false;
 		this.adotado = false;
+		this.tipo = tipo;
 	}
 	
 	public void realizarAdocao(String data_saida) {
@@ -79,16 +80,16 @@ public class Animal {
 		this.descricao = descricao;
 	}
 	
-	public void animalCastrado() {
-		this.castrado = true;
+	public void setCastrado(boolean castrado) {
+		this.castrado = castrado;
 	}
 	
-	public void animalVermifugado() {
-		this.vermifugado = true;
+	public void setVermifugado(boolean vermifugado) {
+		this.vermifugado = vermifugado;
 	}
 	
-	public void animalDisponivelParaAdocao() {
-		this.disponivelParaAdocao = true;
+	public void setDisponivelParaAdocao(boolean disponivelParaAdocao) {
+		this.disponivelParaAdocao = disponivelParaAdocao;
 	}
 	
 }

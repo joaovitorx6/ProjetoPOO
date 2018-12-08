@@ -1,5 +1,7 @@
 
 package model;
+import java.util.ArrayList;
+
 import exception.AnimalNaoEncontradoException;
 import exception.CPFInvalidoException;
 
@@ -7,10 +9,8 @@ public class Adotante {
     
     private String nome, cpf, email, telefone, rua, cidade, bairro, CEP, UF;
     private int [] dataNascimento;
-    
-    int contadorAnimal=0;
 
-    Animal [] arrAnimal = new Animal [100]; 
+    ArrayList<Animal> arrAnimal = new ArrayList<Animal>();
 
     public Adotante () {
         this.nome=null;
@@ -127,36 +127,34 @@ public class Adotante {
     }
 
     public void addAnimal (Animal animal) {
-        arrAnimal[contadorAnimal]=animal;
-        contadorAnimal++;
+        arrAnimal.add(animal);
     }
 
     public Animal buscarAnimal (int idAnimal) throws AnimalNaoEncontradoException {
         
-        for (int i=0; i<arrAnimal.length; i++){
-            if (arrAnimal[i].getidAnimal()==idAnimal){
-                return arrAnimal[i];
+        for (int i=0; i<arrAnimal.size(); i++){
+            if (arrAnimal.get(i).getidAnimal()==idAnimal){
+                return arrAnimal.get(i);
             } 
         }
         
-        throw new AnimalNaoEncontradoException ("Animal nao encontrado");
+        throw new AnimalNaoEncontradoException ("ANIMAL NAO ENCONTRADO");
     }
     
     public void removerAnimal (int idAnimal){
-        for (int i=0; i<arrAnimal.length; i++){
-            if (arrAnimal[i].getidAnimal()==idAnimal){
-                arrAnimal[i]=null;
+        for (int i=0; i<arrAnimal.size(); i++){
+            if (arrAnimal.get(i).getidAnimal()==idAnimal){
+                arrAnimal.remove(i);
             } 
         }
     }
     
-    public Animal [] listarAnimais (){
+    public ArrayList<Animal> listarAnimais (){
         return arrAnimal;
     }
     
     public void realizarAdocao (Animal animal){
-    	arrAnimal[contadorAnimal] = animal;
-    	contadorAnimal++;
+    	arrAnimal.add(animal);
     }
  
 }
