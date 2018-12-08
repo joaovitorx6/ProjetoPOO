@@ -27,6 +27,9 @@ public class AbrigoAnimaisController {
     
     int indiceAnimais=0, iDoador=0, iVoluntario=0, iDoacao=0, iAdotante;
     
+    
+    ////////////ANIMAL/////////////////////
+    
     //BUSCAR ANIMAL CADASTRADO POR ID
     public Animal buscarAnimalporID(int id) throws AnimalNaoEncontradoException {
     	for(int i=0; i<arrAnimais.length; i++) {
@@ -35,7 +38,7 @@ public class AbrigoAnimaisController {
     		}
     	}
     	
-    	throw new AnimalNaoEncontradoException("Animal nao encontrado!");	   	
+    	throw new AnimalNaoEncontradoException("ANIMAL NAO ENCONTRADO!");	   	
     	
     }
     
@@ -70,6 +73,7 @@ public class AbrigoAnimaisController {
     	indiceAnimais++;
     }
     
+    //LISTAR ANIMAIS POR TIPO
     public ArrayList<Animal> listarAnimaisPorTipo (int tipo) throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
  
@@ -94,6 +98,7 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    //LISTAR ANIMAIS CASTRADOS
     public ArrayList<Animal> listarAnimaisCastrados() throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
     	
@@ -110,6 +115,7 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    //LISTAR ANIMAIS NAO CASTRADOS
     public ArrayList<Animal> listarAnimaisNaoCastrados() throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
     	
@@ -126,6 +132,7 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    //LISTAR ANIMAIS VERMIFUGADOS
     public ArrayList<Animal> listarAnimaisVermifugados() throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
     	
@@ -142,6 +149,7 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    //LISTAR ANIMAIS NAO VERMIFUGADOS
     public ArrayList<Animal> listarAnimaisNaoVermifugados() throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
     	
@@ -158,6 +166,7 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    //LISTAR ANIMAIS ADOTADOS
     public ArrayList<Animal> listarAnimaisAdotados() throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
     	
@@ -174,6 +183,7 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    //LISTAR ANIMAIS NAO ADOTADOS
     public ArrayList<Animal> listarAnimaisNaoAdotados() throws AnimalNaoEncontradoException {
     	arrAnimaisAux.clear();
     	
@@ -190,6 +200,8 @@ public class AbrigoAnimaisController {
     	return arrAnimaisAux;
     }
     
+    ////////////ADOTANTE/////////////////////
+    
     //CADASTRAR ADOTANTE NO ARRAY
     public void cadastrarAdotante(Adotante adotante) {
     	arrAdotantes[iAdotante] = adotante;
@@ -199,11 +211,11 @@ public class AbrigoAnimaisController {
     //BUSCANDO ADOTANTE NO ARRAY
     public Adotante buscarAdotante(String cpf) throws CPFInvalidoException, AdotanteNaoEncontradoException{
     	if(cpf.length()!=11)
-			throw new CPFInvalidoException("CPF deve conter 11 digitos");
+			throw new CPFInvalidoException("CPF DEVE CONTER 11 DIGITOS");
 		for (int i=0; i<cpf.length();i++) {
 			char c = cpf.charAt(i);
 			if (!Character.isDigit(c)) {
-				throw new CPFInvalidoException("CPF deve contar apenas digitos");
+				throw new CPFInvalidoException("CPF DEVE CONTER APENAS DIGITOS");
 			}	
 		}
 		
@@ -243,23 +255,22 @@ public class AbrigoAnimaisController {
 		}
     	
     	if(arrAnimaisAux.isEmpty()) {
-    		throw new AnimalNaoEncontradoException("Adotante nao possui animais adotados.");
+    		throw new AnimalNaoEncontradoException("ADOTANTE NAO POSSUI ANIMAIS ADOTADOS!");
     	}
     	
     	return arrAnimaisAux;
     	
     }
     
+    ////////////DOADOR/////////////////////
+    
+    //CADASTRAR DOADOR NO ARRAY
     public void cadastrarDoador (Doador doador) {
     	arrDoadores[iDoador]=doador;
     	iDoador++;
     }
     
-    public void cadastrarVoluntario (Voluntario voluntario) {
-    	arrVoluntarios[iVoluntario]=voluntario;
-    	iVoluntario++;
-    }
-    
+    //BUSCAR DOADOR POR CPF
     public Doador buscarDoador (String cpf) throws DoadorNaoEncontradoException {
     	for (int i=0; i<arrDoadores.length;i++) {
     		if (arrDoadores[i]!=null) {
@@ -267,37 +278,20 @@ public class AbrigoAnimaisController {
 	    			return arrDoadores[i];	
     		}
     	}
-    	throw new DoadorNaoEncontradoException("Doador não encontrado!!");
+    	throw new DoadorNaoEncontradoException("DOADOR NAO ENCONTRADO!");
     }
     
-    public Voluntario buscarVoluntario (String cpf) throws VoluntarioNaoEncontradoException {
-    	for (int i=0; i<arrVoluntarios.length;i++) {
-    		if (arrVoluntarios[i]!=null) {
-	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
-	    			return arrVoluntarios[i];	
-    		}
-    	}
-    	throw new VoluntarioNaoEncontradoException("Voluntario não encontrado!!");
-    }
-    
+    //VERIFICAR SE CPF DE DOADOR JA ESTA CADASTRADO
     public void verificarCPFDoador (String cpf) throws CPFExistenteException {
     	for (int i=0; i<arrDoadores.length;i++) {
     		if (arrDoadores[i]!=null) {
 	    		if (arrDoadores[i].getCpf().equals(cpf)) 
-	    			throw new CPFExistenteException("CPF já existente no sistema!!");	
+	    			throw new CPFExistenteException("CPF JA EXISTENTE NO SISTEMA!");	
     		}
     	}
     }
     
-    public void verificarCPFVoluntario (String cpf) throws CPFExistenteException {
-    	for (int i=0; i<arrVoluntarios.length;i++) {
-    		if (arrVoluntarios[i]!=null) {
-	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
-	    			throw new CPFExistenteException("CPF já existente no sistema!!");	
-    		}
-    	}
-    }
-    
+    //DESVINCULAR DOADOR
     public int desvincularDoador (String cpf) {
     	for (int i=0; i<arrDoadores.length;i++) {
     		if(arrDoadores[i]!=null) {
@@ -309,6 +303,41 @@ public class AbrigoAnimaisController {
     	return 0;
     }
     
+    //BUSCAR DOADORES
+    public Doador [] buscarArrDoadores() {
+    	return arrDoadores;
+    }
+    
+    ////////////VOLUNTARIO/////////////////////
+    
+    //CADASTRAR VOLUNTARIO
+    public void cadastrarVoluntario (Voluntario voluntario) {
+    	arrVoluntarios[iVoluntario]=voluntario;
+    	iVoluntario++;
+    }
+    
+    //BUSCAR VOLUNTARIO POR CPF
+    public Voluntario buscarVoluntario (String cpf) throws VoluntarioNaoEncontradoException {
+    	for (int i=0; i<arrVoluntarios.length;i++) {
+    		if (arrVoluntarios[i]!=null) {
+	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
+	    			return arrVoluntarios[i];	
+    		}
+    	}
+    	throw new VoluntarioNaoEncontradoException("VOLUNTARIO NAO ENCONTRADO!");
+    }
+    
+    //VERIFICAR SE CPF DE VOLUNTARIO JA EXISTE
+    public void verificarCPFVoluntario (String cpf) throws CPFExistenteException {
+    	for (int i=0; i<arrVoluntarios.length;i++) {
+    		if (arrVoluntarios[i]!=null) {
+	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
+	    			throw new CPFExistenteException("CPF JA EXISTENTE NO SISTEMA!");	
+    		}
+    	}
+    }
+    
+    //DESVINCULAR VOUNTARIO
     public int desvincularVoluntario (String cpf) {
     	for (int i=0; i<arrVoluntarios.length;i++) {
     		if(arrVoluntarios[i]!=null) {
@@ -320,19 +349,20 @@ public class AbrigoAnimaisController {
     	return 0;
     }
     
-    public Doador [] buscarArrDoadores() {
-    	return arrDoadores;
-    }
-    
-    public Voluntario [] buscarArrVoluntarios() {
+    //BUSCAR VOLUNTARIO
+    public Voluntario [] buscarArrVoluntarios(){
     	return arrVoluntarios;
     }
     
+    ////////////DOACAO/////////////////////
+    
+    //CADASTRAR DOACOES NO ARRAY
     public void cadastrarDoacoes(Doacao doacao) {
     	arrDoacoes[iDoacao] = doacao;
     	iDoacao++;
     }
     
+    //LISTAR DOACOES
     public ArrayList<Doacao> listarDoacoes() throws DoacaoNaoEncontradaException{
     	arrDoacoesAux.clear();
     	for (int i=0; i<arrDoacoes.length; i++) {
@@ -342,22 +372,24 @@ public class AbrigoAnimaisController {
     	}
     	
     	if(arrDoacoesAux.isEmpty()) {
-    		throw new DoacaoNaoEncontradaException("NAO HA DOACOES CADASTRADAS");
+    		throw new DoacaoNaoEncontradaException("NAO HA DOACOES CADASTRADAS!");
     	}
     	
     	return arrDoacoesAux;
     }
     
-    public ArrayList<Doacao> listarDoacoesPorDoador(String cpf) throws DoacaoNaoEncontradaException{
+    //LISTAR DOACOES POR DOADOR
+    public ArrayList<Doacao> listarDoacoesPorDoador(String cpf, Doador doador) throws DoacaoNaoEncontradaException{
     	arrDoacoesAux.clear();
+    	
     	for (int i=0; i<arrDoacoes.length; i++) {
-    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().getCpf().equals(cpf)) {
+    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().equals(doador)) {
     			arrDoacoesAux.add(arrDoacoes[i]);
     		}
     	}
     	
     	if(arrDoacoesAux.isEmpty()) {
-    		throw new DoacaoNaoEncontradaException("DOADOR NAO REALIZOU NENHUMA DOACAO");
+    		throw new DoacaoNaoEncontradaException("DOADOR NAO REALIZOU NENHUMA DOACAO!");
     	}
     	
     	return arrDoacoesAux;

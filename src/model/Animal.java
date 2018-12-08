@@ -2,13 +2,11 @@ package model;
 
 public class Animal {
 	
-	int id, tipo, idade; /*tipo: 1 cachorro, 2-gato */
-	private String nome, descricao, data_chegada, data_saida;
+	int id, tipo; /*TIPO 1: CACHORRO / TIPO 2: GATO */
+	private String nome, descricao, data_chegada, data_saida, idade;
 	boolean castrado, vermifugado, disponivelParaAdocao, adotado;
 	
-	Informacao [] informacoes = new Informacao[10]; //DE REMEDIOS, CONSULTAS, ETC
-	
-	public Animal (int id, int tipo, String nome, int idade, String descricao, String data_chegada) {
+	public Animal (int id, int tipo, String nome, String idade, String descricao, String data_chegada) {
 		this.id = id;
 		this.nome = nome;
 		this.idade = idade;
@@ -40,7 +38,7 @@ public class Animal {
 		return nome;
 	}
 	
-	public int getIdade() {
+	public String getIdade() {
 		return idade;
 	}
 	
@@ -72,7 +70,7 @@ public class Animal {
 		return disponivelParaAdocao;
 	}
 	
-	public void setIdade(int idade) {
+	public void setIdade(String idade) {
 		this.idade = idade;
 	}
 	
