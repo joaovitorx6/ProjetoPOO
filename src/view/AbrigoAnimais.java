@@ -259,6 +259,8 @@ public class AbrigoAnimais {
 			                    
 			                    resulmenuAnimais = input.nextInt();
 			                    
+			                    
+			                    
 			                    switch(resulmenuAnimais) {
 			                    
 				                    case 1: //REALIZAR NOVO CADASTRO
@@ -286,6 +288,8 @@ public class AbrigoAnimais {
 			                    		
 			                    		System.out.println("ANIMAL CADASTRADO COM SUCESSO!");
 			                    		System.out.println("ID: "+animal.getidAnimal());
+			                    		
+			                    		input = new Scanner(System.in);
 			                    		
 			                    		break;
 			                    		
@@ -420,6 +424,7 @@ public class AbrigoAnimais {
 				                    		}catch(AnimalNaoEncontradoException error) {
 				                    			System.out.println(error.getMessage());
 				                    		}
+
 			                    		}
 				                    		
 			                    		break;
@@ -736,6 +741,7 @@ public class AbrigoAnimais {
 				                    	case 1:
 				                    		System.out.println("NOME:");
 				                    		nome = input.next();
+				                    		
 				                    		System.out.println("CPF:");
 				                    		cpf = input.next();
 				                    		System.out.println("DIA DE NASCIMENTO:");
@@ -1178,11 +1184,11 @@ public class AbrigoAnimais {
 			                	System.out.println("[6] - SAIR");
 			                	menuDoador=input.nextInt();
 			                	
-			                	
 			                	switch (menuDoador) {
 			                		case 1:
 			                			System.out.println("NOME:");
 			                			nome=input.next();
+			                			
 			                			System.out.println("DIA DE NASCIMENTO:");
 			                			dataNascimento[0]=input.nextInt();
 			                			System.out.println("MES DE NASCIMENTO:");
@@ -1193,9 +1199,9 @@ public class AbrigoAnimais {
 			                			cpf=input.next();
 			                			System.out.println("TELEFONE:");
 			                			telefone = input.next();
+			                			
 			                			System.out.println("ENDEREÇO:");
 			                			endereco=input.next();
-			                			input = new Scanner(System.in);
 			                			
 			                			try {
 			                				controller.verificarCPFDoador(cpf);
@@ -1286,13 +1292,13 @@ public class AbrigoAnimais {
 			                			
 			                			try {
 			                				doador = controller.buscarDoador(cpf);
-				                			System.out.println("NOME:" + doador.getNome());
+				                			System.out.println("NOME: " + doador.getNome());
 				                			dataNascimento=doador.getDataNascimento();
-				                			System.out.println("DATA DE NASCIMENTO:" + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
-				                			System.out.println("CPF:" + doador.getCpf());
-				                			System.out.println("TELEFONE:" + doador.getTelefone());
+				                			System.out.println("DATA DE NASCIMENTO: " + dataNascimento[0] + "/" + dataNascimento[1] + "/" + dataNascimento [2]);
+				                			System.out.println("CPF: " + doador.getCpf());
+				                			System.out.println("TELEFONE: " + doador.getTelefone());
 				                			System.out.println("ENDEREÇO: "+doador.getEndereco());
-				                			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+				                			System.out.println("\n");
 			                			} catch (DoadorNaoEncontradoException error) {
 			                				System.out.println(error.getMessage());
 			                			}
