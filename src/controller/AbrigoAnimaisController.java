@@ -35,6 +35,9 @@ public class AbrigoAnimaisController {
     
     ////////////ANIMAL/////////////////////
     
+    
+    ////////////ANIMAL/////////////////////
+    
     //BUSCAR ANIMAL CADASTRADO POR ID
     public Animal buscarAnimalporID(int id) throws AnimalNaoEncontradoException {
     	for(int i=0; i<arrAnimais.length; i++) {
@@ -294,6 +297,7 @@ public class AbrigoAnimaisController {
 	    			throw new CPFExistenteException("CPF JA EXISTENTE NO SISTEMA!");	
     		}
     	}
+<<<<<<< HEAD
     }
     
 <<<<<<< HEAD
@@ -309,6 +313,12 @@ public class AbrigoAnimaisController {
     
     public void verificarCPFDoador (String cpf) throws CPFExistenteException {
 =======
+    //DESVINCULAR DOADOR
+    public int desvincularDoador (String cpf) {
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
+=======
+    }
+    
     //DESVINCULAR DOADOR
     public int desvincularDoador (String cpf) {
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
@@ -344,6 +354,7 @@ public class AbrigoAnimaisController {
     		}
     	}
     	throw new VoluntarioNaoEncontradoException("VOLUNTARIO NAO ENCONTRADO!");
+<<<<<<< HEAD
     }
     
 <<<<<<< HEAD
@@ -366,12 +377,19 @@ public class AbrigoAnimaisController {
     				arrDoadores[i]=null;
     			return 1;
 =======
+=======
+    }
+    
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
     //VERIFICAR SE CPF DE VOLUNTARIO JA EXISTE
     public void verificarCPFVoluntario (String cpf) throws CPFExistenteException {
     	for (int i=0; i<arrVoluntarios.length;i++) {
     		if (arrVoluntarios[i]!=null) {
 	    		if (arrVoluntarios[i].getCpf().equals(cpf)) 
 	    			throw new CPFExistenteException("CPF JA EXISTENTE NO SISTEMA!");	
+<<<<<<< HEAD
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
+=======
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
     		}
     	}
@@ -389,6 +407,7 @@ public class AbrigoAnimaisController {
     	return 0;
     }
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     public int desativarUsuario (String cpf) {
     	for (int i=0; i<arrUsuarios.length;i++) {
@@ -423,17 +442,31 @@ public class AbrigoAnimaisController {
     
     //CADASTRAR DOACOES NO ARRAY
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
+=======
+    //BUSCAR VOLUNTARIO
+    public Voluntario [] buscarArrVoluntarios(){
+    	return arrVoluntarios;
+    }
+    
+    ////////////DOACAO/////////////////////
+    
+    //CADASTRAR DOACOES NO ARRAY
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
     public void cadastrarDoacoes(Doacao doacao) {
     	arrDoacoes[iDoacao] = doacao;
     	iDoacao++;
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void cadastrarUsuario(Usuario usuario) {
     	arrUsuarios[iUsuario] = usuario;
     	iUsuario++;
     }
     
+=======
+    //LISTAR DOACOES
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 =======
     //LISTAR DOACOES
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
@@ -469,9 +502,13 @@ public class AbrigoAnimaisController {
     	return arrDoacoesAux;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
      
 	
 }
+=======
+}
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 =======
 }
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b

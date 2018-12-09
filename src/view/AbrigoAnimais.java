@@ -48,6 +48,7 @@ public class AbrigoAnimais {
         Doacao doacao;
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         try {
         	usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true);
         	controller.cadastrarUsuario(usuarioAdmin);
@@ -68,6 +69,8 @@ while(runsystem) {
 	
 	while (!result) {	
 =======
+=======
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 	    //CRIANDO O USUARIO PADRAO
 	    try {
 	    	usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true);
@@ -83,6 +86,9 @@ while(runsystem) {
 	  
 	    //LACO PARA VERIFICAR LOGIN
 	    while (!result) {	
+<<<<<<< HEAD
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
+=======
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 		   try {
 		      System.out.println("------ ÁREA DE LOGIN ------");
@@ -127,8 +133,11 @@ while(runsystem) {
                 System.out.println("[7] - SAIR");
                 resulmenu1 = input.nextInt();
                 input = new Scanner(System.in);
+<<<<<<< HEAD
                 
                 resulmenu2=0;
+=======
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
                 
                 switch (resulmenu1) {
 		                case 1: 
@@ -317,6 +326,7 @@ while(runsystem) {
 			                    		System.out.println("[2] - GATO");
 			                    		tipo = input.nextInt();
 <<<<<<< HEAD
+<<<<<<< HEAD
 			                    		
 			                    		System.out.println("DIGITE O NOME: ");
 			                    		nome = input.next();
@@ -328,6 +338,8 @@ while(runsystem) {
 			                    		
 			                    		input.nextLine();
 			                    	
+=======
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 =======
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 			                    		input = new Scanner(System.in);
@@ -486,7 +498,11 @@ while(runsystem) {
 				                    			System.out.println(error.getMessage());
 				                    		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				                    		
+=======
+
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 =======
 
 >>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
@@ -1542,8 +1558,13 @@ while(runsystem) {
 		                	break;
 		                	
 <<<<<<< HEAD
+<<<<<<< HEAD
                 	} //FIM DO SWITCH
                 }//FIM DO WHILE
+=======
+                	} //FIM SWITCH PRINCIPAL
+                } //FIM DO WHILE PRINCIPAL
+>>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 =======
                 	} //FIM SWITCH PRINCIPAL
                 } //FIM DO WHILE PRINCIPAL
