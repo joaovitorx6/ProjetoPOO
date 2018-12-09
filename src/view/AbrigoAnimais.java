@@ -1211,7 +1211,6 @@ while(runsystem) {
 		                	} // FIM DO WHILE DO MENU DE ADOTANTES
 		                	break;
 		                	
-		                	
 		                case 5: //MENU DO DOADOR
 		                	while (menuDoador!=6) {
 			                	System.out.println("------ BEM-VINDO AO MENU DO DOADOR ------");
