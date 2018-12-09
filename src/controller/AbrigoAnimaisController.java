@@ -441,7 +441,7 @@ public class AbrigoAnimaisController {
     	arrDoacoesAux.clear();
     	
     	for (int i=0; i<arrDoacoes.length; i++) {
-    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().equals(doador)) {
+    		if(arrDoacoes[i]!=null && arrDoacoes[i].getDoador().getCpf().equals(cpf)) {
     			arrDoacoesAux.add(arrDoacoes[i]);
     		}
     	}

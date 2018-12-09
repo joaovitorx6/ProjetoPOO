@@ -269,6 +269,7 @@ while(runsystem) {
 		                
 		                
 		                case 2: //*** AREA DO ANIMAL ****
+		                	resulmenuAnimais=0;
 		                	while (resulmenuAnimais!=6) {
 			                	System.out.println("----- AREA DO ANIMAL -----");
 			                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
@@ -289,21 +290,12 @@ while(runsystem) {
 			                    		System.out.println("[1] - CACHORRO");
 			                    		System.out.println("[2] - GATO");
 			                    		tipo = input.nextInt();                  		
-			                    		System.out.println("DIGITE O NOME: ");
-			                    		nome = input.next();
-			                    		
-			                    		input.nextLine();
-			                    		
-			                    		System.out.println("DIGITE A IDADE: ");
-			                    		idade = input.nextInt();
-			                    		
-			                    		input.nextLine();
 			                    		input = new Scanner(System.in);
+
 			                    		System.out.println("DIGITE O NOME: ");
 			                    		nome = input.nextLine();
 			                    		System.out.println("DIGITE A IDADE: ");
-			                    		idadeAnimal = input.nextLine();
-			                    		input = new Scanner(System.in);
+			                    		idadeAnimal = input.nextLine();			                    		
 			                    		System.out.println("ESCREVA UMA DESCRICAO: ");
 			                    		descricao = input.nextLine();
 			                    		System.out.println("INFORME A DATA DE ENTRADA: ");
@@ -510,6 +502,7 @@ while(runsystem) {
 			                    		
 			                    	case 5: //BUSCA AVANCADA
 			                    		resposta = 0;
+			                    		
 			                    		while(resposta!=8) {
 			                    			System.out.println("----- BUSCA AVANCADA -----");
 			                    			System.out.println("[1] - TIPO");
@@ -744,6 +737,7 @@ while(runsystem) {
 			                    		
 			                    	case 6:
 			                    		resulmenuAnimais=6;
+			                    		
 			                    		break;
 			                    		
 			                    	default:
@@ -757,6 +751,7 @@ while(runsystem) {
 		                
 		                
 		                case 3: //MENU DO VOLUNTÁRIO
+		                	resulmenuVoluntarios=0;
 		                		while (resulmenuVoluntarios!=8) {
 			                	    System.out.println("------ MENU DO VOLUNTÁRIO ------");
 				                    System.out.println("[1] - CADASTRO");
@@ -844,12 +839,6 @@ while(runsystem) {
 				                    		
 				                    		try {
 				                    			voluntario = controller.buscarVoluntario(cpf);
-				                    		} catch (VoluntarioNaoEncontradoException error) {
-				                    			System.out.println(error.getMessage());
-				                    			break;
-				                    		}
-				                    		
-				                    		if (voluntario!=null) {
 				                    			System.out.println("[1] - NOME");
 				                    			System.out.println("[2] - CPF");
 				                    			System.out.println("[3] - TELEFONE");
@@ -867,31 +856,29 @@ while(runsystem) {
 					                    			case 2:
 					                    				System.out.println("DIGITE O NOVO CPF");
 					                    				cpf = input.next();
-					                    				
-					                    				try {
-					                    					voluntario.setCpf(cpf);
-					                    				} catch (CPFInvalidoException error) {
-					                    					System.out.println(error.getMessage());
-					                    				}
+					                    				voluntario.setCpf(cpf);
 					                    				
 					                    				break;
 					                    			case 3:
-					                    				
 					                    				System.out.println("DIGITE O NOVO TELEFONE:");
 					                    				telefone = input.next();
-				                    				
-					                    				try {
-					                    					voluntario.setTelefone(telefone);
-					                    				} catch (TelefoneInvalidoException error) {
-					                    					System.out.println(error.getMessage());
-					                    				}
+					                    				voluntario.setTelefone(telefone);
 					                    				
 					                    				break;
 					                    				
 					                    			default:
 					                    				break;
-				                    				}
-				                    		} 
+				                    			}
+				                    		}catch (VoluntarioNaoEncontradoException error) {
+				                    			System.out.println(error.getMessage());
+				                    			break;
+				                    		}catch (CPFInvalidoException error) {
+				                    			System.out.println(error.getMessage());
+				                    		}catch(TelefoneInvalidoException error) {
+				                    			System.out.println(error.getMessage());
+				                    		}
+				                    			
+				                    		 
 				                    		break;
 				                    	case 3:
 				                    		diasVoluntario = new int [6];
@@ -1041,6 +1028,7 @@ while(runsystem) {
 		                	
 		                
 		                case 4: //MENU DO ADOTANTE
+		                	resulmenuAdotantes=0;
 		                	while(resulmenuAdotantes!=6) {
 			                	System.out.println("----- AREA DO ADOTANTE -----");
 			                    System.out.println("[1] - REALIZAR NOVO CADASTRO");
@@ -1212,6 +1200,7 @@ while(runsystem) {
 		                	break;
 		                	
 		                case 5: //MENU DO DOADOR
+		                	menuDoador=0;
 		                	while (menuDoador!=6) {
 			                	System.out.println("------ BEM-VINDO AO MENU DO DOADOR ------");
 			                	System.out.println("[1] - CADASTRO");
@@ -1378,6 +1367,7 @@ while(runsystem) {
 		                	break;
 		                	
 		                case 6: //AREA DE DOACOES
+		                	menuDoacao=0;
 		                	while(menuDoacao!=4) {
 			                	System.out.println("----- AREA DE DOACOES -----");
 			                	System.out.println("[1] - REALIZAR NOVA DOACAO");
@@ -1464,16 +1454,12 @@ while(runsystem) {
 			                				
 			                				arrDoacoes = controller.listarDoacoesPorDoador(cpf,doador);
 			                				
-			                				for (int i=0; i<arrDoacoes.size(); i++) {
-				                				if(arrDoacoes.get(i)!=null) {
-				                					System.out.println("----------------------------------------------");
-				                					System.out.println("ID: "+arrDoacoes.get(i).getIdDoacao());
-				                					System.out.println("Descricao: "+arrDoacoes.get(i).getDescricao());
-				                					System.out.println("Data de Doacao: "+arrDoacoes.get(i).getDataDoacao());
-				                					System.out.println("Doador: "+arrDoacoes.get(i).getDoador().getNome());
-				                					System.out.println("----------------------------------------------");
-				                				}
-				                			}
+			                				System.out.println("----------------------------------------------");
+		                					System.out.println("ID: "+arrDoacoes.get(0).getIdDoacao());
+		                					System.out.println("Descricao: "+arrDoacoes.get(0).getDescricao());
+		                					System.out.println("Data de Doacao: "+arrDoacoes.get(0).getDataDoacao());
+		                					System.out.println("Doador: "+arrDoacoes.get(0).getDoador().getNome());
+		                					System.out.println("----------------------------------------------");
 			                				
 			                			}catch(DoadorNaoEncontradoException error) {
 			                				System.out.println(error.getMessage());
