@@ -1,16 +1,28 @@
 package model;
 
+import controller.AbrigoAnimaisController;
 import exception.CPFInvalidoException;
 import exception.LoginExcedidoException;
 import exception.LoginInvalidoException;
 import exception.SenhaExcedidaException;
 import exception.TelefoneInvalidoException;
+import exception.CPFExistenteException;
 
 public class Usuario {
-	private String login, senha, nome, cpf, telefone;
-	boolean eAdmin;
 	
-	public Usuario(String login, String senha, String nome, String cpf, String telefone, boolean eAdmin) throws CPFInvalidoException, LoginExcedidoException, SenhaExcedidaException {
+	private String login, senha, nome, cpf, telefone;
+	private int retorno;
+	boolean eAdmin;
+	Usuario [] arrUsuarios;
+	AbrigoAnimaisController controller = new AbrigoAnimaisController();
+	
+	public Usuario(String login, String senha, String nome, String cpf, String telefone, boolean eAdmin) throws CPFInvalidoException, LoginExcedidoException, SenhaExcedidaException, CPFExistenteException {
+		
+		
+		retorno = controller.verificarCPFUsuario(cpf);
+		if(retorno == 1)
+			throw new CPFExistenteException("CPF jÃ¡ existe");
+		
 		if(cpf.length()!=11)
 			throw new CPFInvalidoException("CPF deve conter 11 digitos");
 		for (int i=0; i<cpf.length();i++) {
@@ -20,9 +32,9 @@ public class Usuario {
 			}	
 		}
 		if (login.length()>6)
-			throw new LoginExcedidoException("Número máximo de digitos do login foi excedido");
+			throw new LoginExcedidoException("Nï¿½mero mï¿½ximo de digitos do login foi excedido");
 		if (senha.length()>6)
-			throw new SenhaExcedidaException("Número máximo de digitos da senha foi excedido");
+			throw new SenhaExcedidaException("Nï¿½mero mï¿½ximo de digitos da senha foi excedido");
 		
 		this.login = login;
 		this.senha = senha;
@@ -65,6 +77,14 @@ public class Usuario {
 		return telefone;
 	}
 	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public String getLogin() {
+		return login;
+	}
+	
 	public void setNome(String nome){
 		this.nome = nome;
 	}
@@ -87,7 +107,7 @@ public class Usuario {
 	
 	public void atualizarSenha (String senha) throws SenhaExcedidaException{
 		if (senha.length()>6) {
-			throw new SenhaExcedidaException ("Número máximo de digitos da senha foi excedido");
+			throw new SenhaExcedidaException ("Nï¿½mero mï¿½ximo de digitos da senha foi excedido");
 		} else {
 			this.senha = senha;
 		}
@@ -95,11 +115,10 @@ public class Usuario {
 	
 	public void atualizarLogin (String login) throws LoginExcedidoException{
 		if (login.length()>6) {
-			throw new LoginExcedidoException ("Número máximo de digitos do login foi excedido");
+			throw new LoginExcedidoException ("Nï¿½mero mï¿½ximo de digitos do login foi excedido");
 		} else {
 			this.login = login;
 		}
 	}
-	
 	
 }

@@ -6,16 +6,21 @@ import model.Animal;
 import model.Doador;
 import model.Voluntario;
 import model.Doacao;
+import model.Usuario;
 import exception.AnimalNaoEncontradoException;
 import exception.CPFInvalidoException;
 import exception.DoadorNaoEncontradoException;
+import exception.LoginExcedidoException;
+import exception.SenhaExcedidaException;
 import exception.VoluntarioNaoEncontradoException;
 import exception.AdotanteNaoEncontradoException;
 import exception.CPFExistenteException;
 import exception.DoacaoNaoEncontradaException;
+import exception.UsuarioNaoEncontradoException;
 
 public class AbrigoAnimaisController {
 	
+	Usuario [] arrUsuarios = new Usuario[100];
 	Animal [] arrAnimais = new Animal[100];
     Adotante [] arrAdotantes = new Adotante[100];
     Doador [] arrDoadores = new Doador[100];
@@ -25,7 +30,7 @@ public class AbrigoAnimaisController {
     Adotante adotante;
     ArrayList<Doacao> arrDoacoesAux = new ArrayList<Doacao>();
     
-    int indiceAnimais=0, iDoador=0, iVoluntario=0, iDoacao=0, iAdotante;
+    int indiceAnimais=0, iDoador=0, iVoluntario=0, iDoacao=0, iAdotante, iUsuario=0;
     
     //BUSCAR ANIMAL CADASTRADO POR ID
     public Animal buscarAnimalporID(int id) throws AnimalNaoEncontradoException {
@@ -280,6 +285,16 @@ public class AbrigoAnimaisController {
     	throw new VoluntarioNaoEncontradoException("Voluntario não encontrado!!");
     }
     
+    public Usuario buscarUsuario (String login, String senha) throws UsuarioNaoEncontradoException {
+    	for (int i=0; i<arrUsuarios.length;i++) {
+    		if (arrUsuarios[i]!=null) {
+	    		if (arrUsuarios[i].getLogin().equals(login) && arrUsuarios[i].getSenha().equals(senha)) 
+	    			return arrUsuarios[i];	
+    		}
+    	}
+    	throw new UsuarioNaoEncontradoException("Usuario não encontrado!!");
+    }
+    
     public void verificarCPFDoador (String cpf) throws CPFExistenteException {
     	for (int i=0; i<arrDoadores.length;i++) {
     		if (arrDoadores[i]!=null) {
@@ -296,6 +311,18 @@ public class AbrigoAnimaisController {
 	    			throw new CPFExistenteException("CPF já existente no sistema!!");	
     		}
     	}
+    }
+    
+    
+    public int verificarCPFUsuario (String cpf) {
+    	for(int i=0; i<arrUsuarios.length;i++) {
+    		if (arrUsuarios[i]!=null) {
+    			if (arrUsuarios[i].getCPF().equals(cpf)) {
+    				return 1;
+    			}
+    		}
+     	}
+    	return 0;
     }
     
     public int desvincularDoador (String cpf) {
@@ -320,6 +347,17 @@ public class AbrigoAnimaisController {
     	return 0;
     }
     
+    public int desativarUsuario (String cpf) {
+    	for (int i=0; i<arrUsuarios.length;i++) {
+    		if(arrUsuarios[i]!=null) {
+    			if (arrUsuarios[i].getCPF().equals(cpf)) 
+    				arrUsuarios[i]=null;
+    			return 1;
+    		}
+    	}
+    	return 0;
+    }
+    
     public Doador [] buscarArrDoadores() {
     	return arrDoadores;
     }
@@ -328,9 +366,18 @@ public class AbrigoAnimaisController {
     	return arrVoluntarios;
     }
     
+    public Usuario [] buscarArrUsuarios() {
+    	return arrUsuarios;
+    }
+    
     public void cadastrarDoacoes(Doacao doacao) {
     	arrDoacoes[iDoacao] = doacao;
     	iDoacao++;
+    }
+    
+    public void cadastrarUsuario(Usuario usuario) {
+    	arrUsuarios[iUsuario] = usuario;
+    	iUsuario++;
     }
     
     public ArrayList<Doacao> listarDoacoes() throws DoacaoNaoEncontradaException{
@@ -362,4 +409,6 @@ public class AbrigoAnimaisController {
     	
     	return arrDoacoesAux;
     }
+     
+	
 }

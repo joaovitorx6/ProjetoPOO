@@ -15,13 +15,14 @@ public class AbrigoAnimais {
         		resulmenuAdotantes=0,
         		menuAtualizarInfoVoluntarios, diasVoluntario [] = new int [6], horarioInicial, horarioFinal, //VOLUNTÁRIO
         		menuDoador=0, dataNascimento [] = new int [3], menuAttDoador, //DOADOR
-        		menuDoacao=0;
+        		menuDoacao=0,
+        		retorno=0;
         String nome, cpf, telefone, login, senha, cep, rua, cidade, bairro, pais,email,
         		descricao, data_chegada, //ANIMAIS
         		endereco, data_doacao; //DOADOR
         	
         boolean result=false, eAdmin=false,
-        		run=true, run2=true, run3=true, run4=true, run5=true, run6=true; //CONTROLE NOS LOOPS DOS MENUS
+        		run=true, run2=true, run3=true, run4=true, run5=true, run6=true, runsystem=true; //CONTROLE NOS LOOPS DOS MENUS
  
         Scanner input = new java.util.Scanner(System.in);
         
@@ -33,7 +34,7 @@ public class AbrigoAnimais {
         Adotante [] arrAdotantes;
         
         /*ARRAYS*/
-        Usuario [] arrUsuarios = new Usuario [100];
+        Usuario [] arrUsuarios;
         Voluntario [] arrVoluntarios;
         
         /*OBJETOS*/
@@ -43,21 +44,27 @@ public class AbrigoAnimais {
         Doador doador=null;
         AbrigoAnimaisController controller = new AbrigoAnimaisController();
         Usuario usuarioAdmin=null;
-        Usuario usuario=null;
+        Usuario usuario;
         Doacao doacao;
         
         try {
         	usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true);
-        	arrUsuarios[indiceUsuarios]=usuarioAdmin;
-            indiceUsuarios++;
+        	controller.cadastrarUsuario(usuarioAdmin);
         } catch (CPFInvalidoException e) {
         	System.out.println(e.getMessage());
         } catch (SenhaExcedidaException e) {
         	System.out.println(e.getMessage());
         } catch (LoginExcedidoException e) {
         	System.out.println(e.getMessage());
+        } catch (CPFExistenteException e) {
+        	System.out.println(e.getMessage());
         }
   
+while(runsystem) {
+	
+	result=false;
+	run=true;
+	
 	while (!result) {	
 		   try {
 		       System.out.println("------ ÁREA DE LOGIN ------");
@@ -66,12 +73,14 @@ public class AbrigoAnimais {
 		      login = input.next();
 		      System.out.println("DIGITE A SUA SENHA:");
 		      senha = input.next();
-	        
-		      result = usuarioAdmin.loginAdmin(login,senha);
-		   
-		   } catch(LoginInvalidoException error){
+		      
+		      usuarioAdmin = controller.buscarUsuario(login, senha);
+		      if(usuarioAdmin!=null)
+		    	  result=true;
+		      
+		   } catch(UsuarioNaoEncontradoException error){
 	       	 System.out.println(error.getMessage());
-		   }
+		   } 
       }
     
       System.out.println("\n");
@@ -92,6 +101,8 @@ public class AbrigoAnimais {
                 System.out.println("[6] - AREA DE DOACOES");
                 System.out.println("[7] - SAIR");
                 resulmenu1 = input.nextInt();
+                
+                resulmenu2=0;
                 
                 switch (resulmenu1) {
 		                case 1: 
@@ -130,21 +141,22 @@ public class AbrigoAnimais {
 			                            	System.out.println("OPCAO INVALIDA");
 			                            }
 			                            
+			                            
 			                            try {
 			                            	usuario = new Usuario (login, senha, nome, cpf, telefone, eAdmin);
-			                                System.out.println("USUARIO CADASTRADO COM SUCESSO");
-			                                arrUsuarios[indiceUsuarios]=usuario;
-			                                indiceUsuarios++;
-			                            } catch (CPFInvalidoException e) {
+				                            controller.cadastrarUsuario(usuario); 
+			                            }catch (CPFInvalidoException e) {
 			                            	System.out.println(e.getMessage());
 			                            } catch (SenhaExcedidaException e) {
 			                            	System.out.println(e.getMessage());
 			                            } catch (LoginExcedidoException e) {
 			                            	System.out.println(e.getMessage());
-			                            }
-			                            
-			                            break;
-			                            
+			                            } catch (CPFExistenteException e) {
+			                            	System.out.println(e.getMessage());
+				                        } 
+			                           
+			                        break;
+			                        
 			                        case 2: //ATUALIZAR INFORMACOES DO USUARIO
 		                            	
 		                                System.out.println("DIGITE QUAL INFORMACAO VOCE DESEJA ATUALIZAR:");
@@ -155,6 +167,7 @@ public class AbrigoAnimais {
 		                                
 		                                switch(resulmenu3){
 			                                case 1: //ATUALIZAR NOME
+			                                	
 			                                    System.out.println("DIGITE O SEU NOVO NOME:");
 			                                    nome = input.next();
 			                                    usuarioAdmin.setNome(nome);
@@ -165,6 +178,7 @@ public class AbrigoAnimais {
 			                                case 2: //ATUALIZAR CPF
 			                                    System.out.println("DIGITE O SEU NOVO CPF:");
 			                                    cpf = input.next();
+			                                    
 			                                    
 			                                    try {
 			                                    	usuarioAdmin.setCpf(cpf);
@@ -214,27 +228,31 @@ public class AbrigoAnimais {
 			                        	break;
 			                        	
 			                     case 4: //DESATIVAR CONTA
-			                    	 
-			                    	 	for(int i=0;i<arrUsuarios.length;i++) {
-			                    	 		if (arrUsuarios[i]!=null) {
-			                    	 			if (arrUsuarios[i].getCPF().equals(usuarioAdmin.getCPF())) {
-			                    	 				arrUsuarios[i]=null;
-			                    	 				System.out.println("Usuario desativado");
-			                    	 				run2=false;
-			                    	 			}
-			                    	 		}
+			                    	 	
+			                    	 	if(controller.desativarUsuario(usuarioAdmin.getCPF())==1) {
+			                    	 		System.out.println("Usuário desativado!!");
+			                    	 		resulmenu2=6;
+			                    	 		run=false;
+			                    	 	} else {
+			                    	 		System.out.println("Usuário não foi desativado!!");
 			                    	 	}
+			                    	 	
 			                        	break;
 			                        	
 			                      case 5: //LISTAR TODOS OS USUARIOS
-			                    	  	for (int i=0; i<arrUsuarios.length;i++) {
+			                    	  
+			                    	  arrUsuarios = controller.buscarArrUsuarios();
+			                    	  
+			                    	  for (int i=0; i<arrUsuarios.length;i++) {
 			                    	  		if(arrUsuarios[i]!=null) {
+			                    	  			System.out.println("\n");
 				                    	  		System.out.println("Nome: " + arrUsuarios[i].getNome());
-				                    	  		System.out.println("CPF:" + arrUsuarios[i].getCPF());
-				                    	  		System.out.println("Telefone:" + arrUsuarios[i].getTelefone());
+				                    	  		System.out.println("CPF: " + arrUsuarios[i].getCPF());
+				                    	  		System.out.println("Telefone: " + arrUsuarios[i].getTelefone());
 				                    	  		System.out.println("\n");
 			                    	  		}
 			                    	  	}
+			                    	  
 			                        	break;
 			                      case 6:
 			                    	  resulmenu2=6;
@@ -269,7 +287,6 @@ public class AbrigoAnimais {
 			                    		System.out.println("[1] - CACHORRO");
 			                    		System.out.println("[2] - GATO");
 			                    		tipo = input.nextInt();
-<<<<<<< HEAD
 			                    		
 			                    		System.out.println("DIGITE O NOME: ");
 			                    		nome = input.next();
@@ -280,15 +297,13 @@ public class AbrigoAnimais {
 			                    		idade = input.nextInt();
 			                    		
 			                    		input.nextLine();
-			                    		
-=======
+			                    	
 			                    		input = new Scanner(System.in);
 			                    		System.out.println("DIGITE O NOME: ");
 			                    		nome = input.nextLine();
 			                    		System.out.println("DIGITE A IDADE: ");
 			                    		idade = input.nextInt();
 			                    		input = new Scanner(System.in);
->>>>>>> ca3f1c19be35c05a3b1e7aa4b2976dd5af1d974a
 			                    		System.out.println("ESCREVA UMA DESCRICAO: ");
 			                    		descricao = input.nextLine();
 			                    		System.out.println("INFORME A DATA DE ENTRADA: ");
@@ -438,22 +453,7 @@ public class AbrigoAnimais {
 				                    		}catch(AnimalNaoEncontradoException error) {
 				                    			System.out.println(error.getMessage());
 				                    		}
-<<<<<<< HEAD
 				                    		
-				                    		//LACO PARA IMPRIMIR NA TELA
-				                    		for(int i=0; i<arrAnimais.length; i++) {
-				                    			if(arrAnimais[i]!=null) {
-				                    				System.out.println("------ "+arrAnimais[i].getNome()+" -----");
-				                    				System.out.println("ID: "+arrAnimais[i].getidAnimal());
-				                    				System.out.println("Idade: "+arrAnimais[i].getIdade());
-				                    				System.out.println("Descricao: "+arrAnimais[i].getDescricao());
-				                    				System.out.println("Castrado: "+arrAnimais[i].getCastrado());
-				                    				System.out.println("Vermifugado: "+arrAnimais[i].getVermifugado());
-				                    				System.out.println("---------------------------------------------");
-				                    			}
-				                    		}
-=======
->>>>>>> ca3f1c19be35c05a3b1e7aa4b2976dd5af1d974a
 			                    		}
 				                    		
 			                    		break;
@@ -1472,12 +1472,13 @@ public class AbrigoAnimais {
 		                case 7:
 		                	run=false;
 		                	System.out.println("OBRIGADO POR ACESSAR O NOSSO SISTEMA!!");
+		                	System.out.println("\n");
 		                	break;
 		                default:
 		                	break;
 		                	
-                	} //FIM DO WHILE 
-                }
+                	} //FIM DO SWITCH
+                }//FIM DO WHILE
 		    
          
                 // ****** SE O USUARIO NAO FOR ADMINISTRADOR ****  
@@ -1486,6 +1487,7 @@ public class AbrigoAnimais {
             	      	    	
        } //FIM DO ELSE IF SE O USUARIO NAO FOR ADMINISTRADOR
 		
+	} //WHILE RUN SYSTEM
 		
     } //FIM DO MAIN
 }//FIM DA CLASSE
