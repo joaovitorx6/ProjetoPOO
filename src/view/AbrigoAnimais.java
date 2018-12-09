@@ -47,8 +47,6 @@ public class AbrigoAnimais {
         Usuario usuario;
         Doacao doacao;
         
-<<<<<<< HEAD
-<<<<<<< HEAD
         try {
         	usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true);
         	controller.cadastrarUsuario(usuarioAdmin);
@@ -66,30 +64,8 @@ while(runsystem) {
 	
 	result=false;
 	run=true;
-	
-	while (!result) {	
-=======
-=======
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
-	    //CRIANDO O USUARIO PADRAO
-	    try {
-	    	usuarioAdmin = new Usuario ("admin", "admin", "juvitu", "12345678910", "40028922", true);
-	    	arrUsuarios[indiceUsuarios]=usuarioAdmin;
-	        indiceUsuarios++;
-	    } catch (CPFInvalidoException e) {
-	    	System.out.println(e.getMessage());
-	    } catch (SenhaExcedidaException e) {
-	    	System.out.println(e.getMessage());
-	    } catch (LoginExcedidoException e) {
-	    	System.out.println(e.getMessage());
-	    }
-	  
 	    //LACO PARA VERIFICAR LOGIN
 	    while (!result) {	
-<<<<<<< HEAD
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
-=======
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 		   try {
 		      System.out.println("------ ÁREA DE LOGIN ------");
 		      /*VERIFICA O LOGIN E PEGA O OBJETO DO USUARIO*/
@@ -97,7 +73,6 @@ while(runsystem) {
 		      login = input.next();
 		      System.out.println("DIGITE A SUA SENHA:");
 		      senha = input.next();
-<<<<<<< HEAD
 		      
 		      usuarioAdmin = controller.buscarUsuario(login, senha);
 		      if(usuarioAdmin!=null)
@@ -106,14 +81,6 @@ while(runsystem) {
 		   } catch(UsuarioNaoEncontradoException error){
 	       	 System.out.println(error.getMessage());
 		   } 
-=======
-	        
-		      result = usuarioAdmin.loginAdmin(login,senha);
-		   
-		   }catch(LoginInvalidoException error){
-			   System.out.println(error.getMessage());
-		   }
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
       }
     
       System.out.println("\n");
@@ -133,11 +100,8 @@ while(runsystem) {
                 System.out.println("[7] - SAIR");
                 resulmenu1 = input.nextInt();
                 input = new Scanner(System.in);
-<<<<<<< HEAD
                 
                 resulmenu2=0;
-=======
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
                 
                 switch (resulmenu1) {
 		                case 1: 
@@ -324,10 +288,7 @@ while(runsystem) {
 			                    		System.out.println("QUAL A ESPECIE?");
 			                    		System.out.println("[1] - CACHORRO");
 			                    		System.out.println("[2] - GATO");
-			                    		tipo = input.nextInt();
-<<<<<<< HEAD
-<<<<<<< HEAD
-			                    		
+			                    		tipo = input.nextInt();                  		
 			                    		System.out.println("DIGITE O NOME: ");
 			                    		nome = input.next();
 			                    		
@@ -337,11 +298,6 @@ while(runsystem) {
 			                    		idade = input.nextInt();
 			                    		
 			                    		input.nextLine();
-			                    	
-=======
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
-=======
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 			                    		input = new Scanner(System.in);
 			                    		System.out.println("DIGITE O NOME: ");
 			                    		nome = input.nextLine();
@@ -497,15 +453,6 @@ while(runsystem) {
 				                    		}catch(AnimalNaoEncontradoException error) {
 				                    			System.out.println(error.getMessage());
 				                    		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-				                    		
-=======
-
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
-=======
-
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
 			                    		}
 				                    		
 			                    		break;
@@ -1556,26 +1503,15 @@ while(runsystem) {
 		                	break;
 		                default:
 		                	break;
-		                	
-<<<<<<< HEAD
-<<<<<<< HEAD
+		                
                 	} //FIM DO SWITCH
                 }//FIM DO WHILE
-=======
-                	} //FIM SWITCH PRINCIPAL
-                } //FIM DO WHILE PRINCIPAL
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
-=======
-                	} //FIM SWITCH PRINCIPAL
-                } //FIM DO WHILE PRINCIPAL
->>>>>>> f173d806b03f11c863f2a29bb1bfe7b3111af19b
-		    
+             } //FIM DO IF 
+          } //FIM DO WHILE PRINCIPAL
          
-		} // ****** SE O USUARIO NAO FOR ADMINISTRADOR ****  
+		} // FIM DO WHILE PRINCIPAL
        
 		
-	} //WHILE RUN SYSTEM
-		
     } //FIM DO MAIN
-}//FIM DA CLASSE
+		
 
